@@ -1,7 +1,23 @@
+
+body {
+  background-image: url("../img/party-background.jpg");
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 .header {
   background-color: skyblue;
 }
 
 .buttons {
   box-shadow: 12px;
+}
+
+.sections {
+  margin-left: 20px;
+  margin-right: 20px;
+  background: white;
+  opacity: 0.75;
+  height: 60vh;
 }
