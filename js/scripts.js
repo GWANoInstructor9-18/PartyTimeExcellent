@@ -1,3 +1,4 @@
+
 let parties;
 
 parties = [{
@@ -14,3 +15,4 @@ parties = [{
   time: '7:00pm',
   description: 'This is a generic party.'
 }]
+
