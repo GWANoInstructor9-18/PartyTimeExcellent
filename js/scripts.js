@@ -10,7 +10,7 @@ const findBtn = document.getElementById('findBtn');
 const partyList = document.getElementById('partyList');
 
 let parties;
-
+let pizza;
 
 
 createBtn.onclick = function() {
@@ -35,9 +35,9 @@ window.onload = function(){
         let description = parties[i].description;
 
         newParty(eventName, time, date, description);
-    
+
     }
-    
+
 
 }
 
@@ -49,7 +49,7 @@ function newParty(eventName, time, date, description){
     partyLi.append(eventName, time, date, description);
     partyDiv.append(partyLi);
     partyList.appendChild(partyLi);
-    
+
 }
 
 
@@ -66,7 +66,7 @@ parties = [{
     date: '10/31/2018',
     time: '7:00pm',
     description: 'This is a generic party.'
-  }, 
+  },
   {
   id: 2,
   creator: 'Phil',
