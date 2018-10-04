@@ -1,3 +1,9 @@
+//create modal functions
+let modal = document.getElementById('createModal');
+
+let createBtn = document.getElementById('createBtn');
+
+let span = document.getElementsByClassName("close")[0];
 
 let parties;
 
@@ -16,3 +22,18 @@ parties = [{
   description: 'This is a generic party.'
 }]
 
+
+
+createBtn.onclick = function() {
+    modal.style.display = "block";
+}
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
