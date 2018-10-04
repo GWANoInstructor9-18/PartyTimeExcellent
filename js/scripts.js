@@ -66,32 +66,60 @@ parties = [{
     date: '10/31/2018',
     time: '7:00pm',
     description: 'This is a generic party.'
-  }, 
-  {
-  id: 2,
-  creator: 'Phil',
-  eventName: 'Kegger',
-  address: '123 Test St.',
-  city: 'Visalia',
-  state: 'CA',
-  zip: '93291',
-  ageRestricted: false,
-  private: true,
-  date: '12/25/2018',
-  time: '12:00pm',
-  description: 'This is a generic christmas kegger.'
-  },
-  {
-  id: 3,
-  creator: 'John',
-  eventName: 'Runescape LAN',
-  address: '999 Johns house',
-  city: 'Tulare',
-  state: 'CA',
-  zip: '93724',
-  ageRestricted: true,
-  private: true,
-  date: '10/01/2018',
-  time: '9:00am',
-  description: 'This is an extra special LAN party.'
-  }]
+}, 
+{
+    id: 2,
+    creator: 'Phil',
+    eventName: 'Kegger',
+    address: '123 Test St.',
+    city: 'Visalia',
+    state: 'CA',
+    zip: '93291',
+    ageRestricted: false,
+    private: true,
+    date: '12/25/2018',
+    time: '12:00pm',
+    description: 'This is a generic christmas kegger.'
+},
+{
+    id: 3,
+    creator: 'John',
+    eventName: 'Runescape LAN',
+    address: '999 Johns house',
+    city: 'Tulare',
+    state: 'CA',
+    zip: '93724',
+    ageRestricted: true,
+    private: true,
+    date: '10/01/2018',
+    time: '9:00am',
+    description: 'This is an extra special LAN party.'
+}]
+
+
+
+function testPull(){
+    let test = {};
+    let test1 = document.getElementById('test1').value;
+    let test2 = document.getElementById('test2').value;
+    let test3 = document.getElementById('test3').value;
+    let i = parties.length;
+
+    test.testA = test1;
+    test.testB = test2;
+    test.testC = test3;
+
+    parties[i] = test;
+    console.log(parties)
+
+    // for(let i = parties.length; i <= parties.length; i++){
+    //     if(parties[i] == undefined){
+    //     parties[i] = test;
+    //     console.log(parties);
+
+    // }
+    // }
+
+}
+
+    testBtn.addEventListener('click', testPull)
