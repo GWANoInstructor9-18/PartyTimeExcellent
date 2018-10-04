@@ -1,9 +1,13 @@
 //create modal functions
-var modal = document.getElementById('createModal');
+const modal = document.getElementById('createModal');
 
-var btn = document.getElementById('createBtn');
+const createBtn = document.getElementById('createBtn');
 
-var span = document.getElementsByClassName("close")[0];
+const closeSpan = document.getElementsByClassName("close")[0];
+
+const findBtn = document.getElementById('findBtn');
+
+const partyList = document.getElementById('partyList');
 
 let parties;
 
@@ -20,13 +24,41 @@ parties = [{
   date: '10/31/2018',
   time: '7:00pm',
   description: 'This is a generic party.'
+}, 
+{
+id: 2,
+creator: 'Phil',
+eventName: 'Kegger',
+address: '123 Test St.',
+city: 'Visalia',
+state: 'CA',
+zip: '93291',
+ageRestricted: false,
+private: true,
+date: '12/25/2018',
+time: '12:00pm',
+description: 'This is a generic christmas kegger.'
+},
+{
+id: 3,
+creator: 'John',
+eventName: 'Runescape LAN',
+address: '999 Johns house',
+city: 'Tulare',
+state: 'CA',
+zip: '93724',
+ageRestricted: true,
+private: true,
+date: '10/01/2018',
+time: '9:00am',
+description: 'This is an extra special LAN party.'
 }]
 
-btn.onclick = function() {
+createBtn.onclick = function() {
     modal.style.display = "block";
 }
 
-span.onclick = function() {
+closeSpan.onclick = function() {
     modal.style.display = "none";
 }
 
@@ -34,4 +66,27 @@ window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
+}
+
+findBtn.addEventListener('click', e => {
+
+    let eventName = parties[0].eventName;
+    let time = parties[0].time;
+    let date = parties[0].date;
+    let description = parties[0].description;
+
+    newParty(eventName, time, date, description);
+    
+
+})
+
+function newParty(eventName, time, date, description){
+    let partyDiv = document.createElement('div');
+    let partyLi = document.createElement('li');
+
+    //APPENDABLES
+    partyLi.append(eventName, time, date, description);
+    partyDiv.append(partyLi);
+    partyList.appendChild(partyLi);
+    
 }
