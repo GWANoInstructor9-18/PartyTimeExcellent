@@ -11,16 +11,13 @@ body {
 }
 
 
-.sections {
-  margin-left: 20px;
-  margin-right: 20px;
+.block-section {
+  padding: -5px;
   background: white;
   opacity: 0.75;
-  height: 60vh;
-}
-
-.main {
-
+  min-height: 25rem;
+  border-style: solid;
+  border-width: 3px;
 }
 
 .modal {
