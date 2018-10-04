@@ -1,7 +1,25 @@
+body {
+  background: #9cb0d1;
+}
+
+
 .header {
   background-color: skyblue;
+  width: 100%;
+  padding: 10px 10px;
 }
 
 .buttons {
   box-shadow: 12px;
+}
+
+.column {
+    border-style: solid;
+    text-align: center;
+}
+
+.map {
+  border-style: solid;
+  width: 100%;
+  text-align: center;
 }
