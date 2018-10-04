@@ -10,11 +10,11 @@
 </head>
 <body>
 
-  <div clss="container">
+  <div class="container">
     <h1 class="text-center header">Party Time Excellent</h1>
   </div>
 
-  <section>
+  <section class="container">
     <div class="container-fluid text-center main">
       <div class="row">
         <div class="col-sm-5 sections">
@@ -24,7 +24,7 @@
           <br>
           <button id="findBtn" class="btn-primary">Find a party</button>
         </div>
-        <div id="listDiv" class="col-sm-5 sections">
+        <div id="listDiv" class="col-sm-5 col-sm-push-1 sections">
           list of parties go here
         </div>
       </div>
@@ -39,8 +39,8 @@
     </div>
   </section>
 
-  <div>
-    <div class="modal">
+  <div id='createModal' class='modal'>
+    <div class="modal-content">
       <span class="close">&times</span>
       <form>
         Event Name:<br>
