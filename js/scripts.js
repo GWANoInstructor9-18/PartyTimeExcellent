@@ -94,7 +94,7 @@ constructor(){
     newParty.description = getDescription;
     newParty.onScreen = false;
 
-    checkNewParty(newParty, getAgeRadios, getPrivateRadios);
+    checkNewParty(newParty);
 
 }
 }
