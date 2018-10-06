@@ -4,7 +4,7 @@ let parties = [{id: 1,creator: 'Zac',eventName: 'Halloween',address: '700 Van Ne
 //VARIABLES 
 
 const modal = document.getElementById('createModal'),
-    closeSpan = document.getElementsByClassName("close")[0],
+    closeSpan = document.getElementsByClassName('close')[0],
     createBtn = document.getElementById('createBtn'),
     createSubmitBtn = document.getElementById('createSubmitBtn'),
     findBtn = document.getElementById('findBtn'),
@@ -16,16 +16,16 @@ window.onload = displayParties();
 
 //CREATE MODAL LISTENERS
 createBtn.onclick = function() {
-    modal.style.display = "block";
+    modal.style.display = 'block';
 }
 
 closeSpan.onclick = function() {
-    modal.style.display = "none";
+    modal.style.display = 'none';
 }
 
 window.onclick = function(event) {
     if (event.target == modal) {
-        modal.style.display = "none";
+        modal.style.display = 'none';
     }
 }
 
@@ -52,6 +52,7 @@ function displayParties(){
     };
 }
 
+
 function createParty(){
     let newParty = {};
     let getEventName = document.getElementById('getEventName').value;
@@ -59,16 +60,40 @@ function createParty(){
     let getCity = document.getElementById('getCity').value;
     let getState = document.getElementById('getState').value;
     let getZip = document.getElementById('getZip').value;
-    let getAge = document.getElementById('getAge').value;
-    let getPrivate = document.getElementById('getPrivate').value;
+    let getAgeRadios = document.getElementsByName('ageCheck')
+    let getAge;
+    let getPrivateRadios = document.getElementsByName('privateCheck')
+    let getPrivate;
     let getDate = document.getElementById('getDate').value;
     let getTime = document.getElementById('getTime').value;
     let getDescription = document.getElementById('getDescription').value;
    
     let i = parties.length; // THIS NEEDS TO BE A FOR LOOP;
 
-    newParty.id = "INTEGRATE THIS FEATURE PLEASE" //PLACEHOLDER;
-    newParty.creator = "INTEGRATE THIS FEATURE PLEASE" //PLACEHOLDER;
+    for(let x = 0; x < getAgeRadios.length; x++){
+        if(getAgeRadios[0].checked){
+            getAge = true;
+            getAgeRadios[x].checked = false;
+            break;
+        }else {
+            getAge = false;
+            getAgeRadios[x].checked = false;
+        }
+    }
+
+    for(let x = 0; x < getAgeRadios.length; x++){
+        if(getPrivateRadios[0].checked){
+            getPrivate = true;
+            getPrivateRadios[x].checked = false;
+            break;
+        }else {
+            getPrivate = false;
+            getPrivateRadios[x].checked = false;
+        }
+    } 
+
+    newParty.id = 'INTEGRATE THIS FEATURE PLEASE' //PLACEHOLDER;
+    newParty.creator = 'INTEGRATE THIS FEATURE PLEASE' //PLACEHOLDER;
     newParty.eventName = getEventName;
     newParty.addres = getStreetAddress;
     newParty.city = getCity;
@@ -85,20 +110,19 @@ function createParty(){
     console.log(parties)
     clearCreateForm();
     displayParties();
+    modal.style.display = 'none'
 
 }
 
 function clearCreateForm(){
-    getEventName.value = "";
-    getStreetAddress.value = "";
-    getCity.value = "";
-    getState.value = "";
-    getZip.value = "";
-    getAge.value = "";
-    getPrivate.value = "";
-    getDate.value = "";
-    getTime.value = "";
-    getDescription.value = "";
+    getEventName.value = '';
+    getStreetAddress.value = '';
+    getCity.value = '';
+    getState.value = '';
+    getZip.value = '';
+    getDate.value = '';
+    getTime.value = '';
+    getDescription.value = '';
 
 }
 
