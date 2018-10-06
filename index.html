@@ -9,14 +9,17 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-
+  <!-- HEADER -->
   <div class="container">
     <h1 class="text-center header">Party Time Excellent</h1>
   </div>
 
+  <!-- BODY / CONTAINER DIV -->
   <section class="container">
     <div class="container-fluid text-center main">
       <div class="row">
+
+        <!-- BUTTON DIV -->
         <div class="col-sm-5 sections">
           <br>
           <button id="createBtn" class="btn-primary">Create a party</button>
@@ -24,16 +27,19 @@
           <br>
           <button id="findBtn" class="btn-primary">Find a party</button>
         </div>
+
+        <!-- LIST DIV -->
         <div class="col-sm-5 col-sm-push-1 sections">
           list of parties go here
           <ul id="partyList">
-
           </ul>
         </div>
       </div>
     </div>
   </section>
   <br>
+  
+  <!-- MAP DIV -->
   <section class="sections col-sm-7">
     <div class="container-fluid text-center">
       <div class="map">
@@ -42,6 +48,7 @@
     </div>
   </section>
 
+  <!-- CREATE MODAL -->
   <div id='createModal' class='modal'>
     <div class="modal-content">
       <span class="close">&times</span>

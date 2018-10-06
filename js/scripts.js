@@ -67,9 +67,8 @@ function createParty(){
     let getDate = document.getElementById('getDate').value;
     let getTime = document.getElementById('getTime').value;
     let getDescription = document.getElementById('getDescription').value;
-   
-    let i = parties.length; // THIS NEEDS TO BE A FOR LOOP;
 
+    //CHECKS RADIO BUTTONS
     for(let x = 0; x < getAgeRadios.length; x++){
         if(getAgeRadios[0].checked){
             getAge = true;
@@ -106,11 +105,7 @@ function createParty(){
     newParty.description = getDescription;
     newParty.onScreen = false;
 
-    parties[i] = newParty;
-    console.log(parties)
-    clearCreateForm();
-    displayParties();
-    modal.style.display = 'none'
+    checkNewParty(newParty);
 
 }
 
@@ -124,6 +119,24 @@ function clearCreateForm(){
     getTime.value = '';
     getDescription.value = '';
 
+}
+
+function checkNewParty(newParty){
+    let values = Object.values(newParty);
+    for(let i = 0; i < values.length; i++) {
+        if(values[i] === ''){
+            //NEED TO THROW ERROR HERE
+            return;
+        } 
+        else if (values[i] !== ''){
+            continue;
+        }
+        parties[i] = newParty;
+    };
+        parties[parties.length] = newParty;
+        clearCreateForm();
+        displayParties();
+        modal.style.display = 'none';
 }
 
 createSubmitBtn.addEventListener('click', createParty);
