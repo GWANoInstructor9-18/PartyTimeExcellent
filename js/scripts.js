@@ -1,12 +1,9 @@
 //create modal functions
 const modal = document.getElementById('createModal');
-
-const createBtn = document.getElementById('createBtn');
-
 const closeSpan = document.getElementsByClassName("close")[0];
-
+const createBtn = document.getElementById('createBtn');
+const createSubmitBtn = document.getElementById('createSubmitBtn');
 const findBtn = document.getElementById('findBtn');
-
 const partyList = document.getElementById('partyList');
 
 let parties;
@@ -98,28 +95,52 @@ parties = [{
 
 
 
-function testPull(){
-    let test = {};
-    let test1 = document.getElementById('test1').value;
-    let test2 = document.getElementById('test2').value;
-    let test3 = document.getElementById('test3').value;
-    let i = parties.length;
+function createParty(){
+    let newParty = {};
+    let getEventName = document.getElementById('getEventName').value;
+    let getStreetAddress = document.getElementById('getStreetAddress').value;
+    let getCity = document.getElementById('getCity').value;
+    let getState = document.getElementById('getState').value;
+    let getZip = document.getElementById('getZip').value;
+    let getAge = document.getElementById('getAge').value;
+    let getPrivate = document.getElementById('getPrivate').value;
+    let getDate = document.getElementById('getDate').value;
+    let getTime = document.getElementById('getTime').value;
+    let getDescription = document.getElementById('getDescription').value;
+   
+    let i = parties.length; // THIS NEEDS TO BE A FOR LOOP
 
-    test.testA = test1;
-    test.testB = test2;
-    test.testC = test3;
+    newParty.id = "INTEGRATE THIS FEATURE PLEASE" //PLACEHOLDER
+    newParty.creator = "INTEGRATE THIS FEATURE PLEASE" //PLACEHOLDER
+    newParty.eventName = getEventName
+    newParty.addres = getStreetAddress
+    newParty.city = getCity
+    newParty.state = getState
+    newParty.zip = getZip
+    newParty.ageRestricted = getAge
+    newParty.private = getPrivate
+    newParty.date = getDate
+    newParty.time = getTime
+    newParty.description = getDescription
 
-    parties[i] = test;
+    parties[i] = newParty;
     console.log(parties)
-
-    // for(let i = parties.length; i <= parties.length; i++){
-    //     if(parties[i] == undefined){
-    //     parties[i] = test;
-    //     console.log(parties);
-
-    // }
-    // }
+     clearForm();
 
 }
 
-    testBtn.addEventListener('click', testPull)
+function clearForm(){
+    getEventName.value = ""
+    getStreetAddress.value = ""
+    getCity.value = ""
+    getState.value = ""
+    getZip.value = ""
+    getAge.value = ""
+    getPrivate.value = ""
+    getDate.value = ""
+    getTime.value = ""
+    getDescription.value = ""
+
+}
+
+    createSubmitBtn.addEventListener('click', createParty)
