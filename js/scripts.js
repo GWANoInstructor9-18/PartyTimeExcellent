@@ -3,29 +3,38 @@ let parties = [{id: 1,creator: 'Zac',eventName: 'Halloween',address: '700 Van Ne
 
 //VARIABLES 
 
-const modal = document.getElementById('createModal'),
+const createModal = document.getElementById('createModal'),
     closeSpan = document.getElementsByClassName('close')[0],
     createBtn = document.getElementById('createBtn'),
     createSubmitBtn = document.getElementById('createSubmitBtn'),
     findBtn = document.getElementById('findBtn'),
-    partyList = document.getElementById('partyList');
+    partyList = document.getElementById('partyList'),
+    getAgeRadios = document.getElementsByName('ageCheck'),
+    getPrivateRadios = document.getElementsByName('privateCheck');
 
-window.onload = displayParties();
+
 
 //EVENT LISTENERS
+window.onload = displayParties();
+
+createSubmitBtn.addEventListener('click', createParty);
 
 //CREATE MODAL LISTENERS
 createBtn.onclick = function() {
-    modal.style.display = 'block';
+    createModal.style.display = 'block';
+    getAgeRadios[0].checked = false;
+    getAgeRadios[1].checked = false;
+    getPrivateRadios[0].checked = false;
+    getPrivateRadios[1].checked = false;
 }
 
 closeSpan.onclick = function() {
-    modal.style.display = 'none';
+    createModal.style.display = 'none';
 }
 
 window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = 'none';
+    if (event.target == createModal) {
+        createModal.style.display = 'none';
     }
 }
 
@@ -52,44 +61,26 @@ function displayParties(){
     };
 }
 
-
 function createParty(){
-    let newParty = {};
-    let getEventName = document.getElementById('getEventName').value;
-    let getStreetAddress = document.getElementById('getStreetAddress').value;
-    let getCity = document.getElementById('getCity').value;
-    let getState = document.getElementById('getState').value;
-    let getZip = document.getElementById('getZip').value;
-    let getAgeRadios = document.getElementsByName('ageCheck')
-    let getAge;
-    let getPrivateRadios = document.getElementsByName('privateCheck')
-    let getPrivate;
-    let getDate = document.getElementById('getDate').value;
-    let getTime = document.getElementById('getTime').value;
-    let getDescription = document.getElementById('getDescription').value;
+    new Party();
+}
 
-    //CHECKS RADIO BUTTONS
-    for(let x = 0; x < getAgeRadios.length; x++){
-        if(getAgeRadios[0].checked){
-            getAge = true;
-            getAgeRadios[x].checked = false;
-            break;
-        }else {
-            getAge = false;
-            getAgeRadios[x].checked = false;
-        }
-    }
+class Party{
+constructor(){
+    let newParty = {},
+        getEventName = document.getElementById('getEventName').value,
+        getStreetAddress = document.getElementById('getStreetAddress').value,
+        getCity = document.getElementById('getCity').value,
+        getState = document.getElementById('getState').value,
+        getZip = document.getElementById('getZip').value,
+        getAgeRadios = document.getElementsByName('ageCheck'),
+        getPrivateRadios = document.getElementsByName('privateCheck'),
+        getDate = document.getElementById('getDate').value,
+        getTime = document.getElementById('getTime').value,
+        getDescription = document.getElementById('getDescription').value;
 
-    for(let x = 0; x < getAgeRadios.length; x++){
-        if(getPrivateRadios[0].checked){
-            getPrivate = true;
-            getPrivateRadios[x].checked = false;
-            break;
-        }else {
-            getPrivate = false;
-            getPrivateRadios[x].checked = false;
-        }
-    } 
+    checkAgeRadios(getAgeRadios, newParty);
+    checkPrivateRadios(getPrivateRadios, newParty);
 
     newParty.id = 'INTEGRATE THIS FEATURE PLEASE' //PLACEHOLDER;
     newParty.creator = 'INTEGRATE THIS FEATURE PLEASE' //PLACEHOLDER;
@@ -98,8 +89,6 @@ function createParty(){
     newParty.city = getCity;
     newParty.state = getState;
     newParty.zip = getZip;
-    newParty.ageRestricted = getAge;
-    newParty.private = getPrivate;
     newParty.date = getDate;
     newParty.time = getTime;
     newParty.description = getDescription;
@@ -107,6 +96,50 @@ function createParty(){
 
     checkNewParty(newParty);
 
+}
+}
+
+function checkAgeRadios(getAgeRadios, newParty){
+    //CHECKS RADIO BUTTONS
+    if (getAgeRadios[0].checked == false && getAgeRadios[1].checked == false){
+        newParty.ageRestricted = undefined;
+        return;
+    }
+    else if(getAgeRadios[0].checked){
+        newParty.ageRestricted = true;
+    }else {
+        newParty.ageRestricted = false;
+    }
+
+}
+
+function checkPrivateRadios(getPrivateRadios, newParty){
+    //CHECKS RADIO BUTTONS
+    if (getPrivateRadios[0].checked == false && getPrivateRadios[1].checked == false){
+        newParty.private = undefined;
+        return;
+    }
+    else if(getPrivateRadios[0].checked){
+        newParty.private = true;
+    }else {
+        newParty.private = false;
+    }
+}
+
+function checkNewParty(newParty){
+    let values = Object.values(newParty);
+    for(let i = 0; i < values.length; i++) {
+        if(values[i] === '' || values[i] === undefined){
+            //NEED TO THROW ERROR HERE
+            alert('Please include all required information');
+            return;
+        } 
+        else {continue;}    
+    };
+        parties[parties.length] = newParty;
+        clearCreateForm();
+        displayParties();
+        createModal.style.display = 'none';
 }
 
 function clearCreateForm(){
@@ -118,25 +151,4 @@ function clearCreateForm(){
     getDate.value = '';
     getTime.value = '';
     getDescription.value = '';
-
 }
-
-function checkNewParty(newParty){
-    let values = Object.values(newParty);
-    for(let i = 0; i < values.length; i++) {
-        if(values[i] === ''){
-            //NEED TO THROW ERROR HERE
-            return;
-        } 
-        else if (values[i] !== ''){
-            continue;
-        }
-        parties[i] = newParty;
-    };
-        parties[parties.length] = newParty;
-        clearCreateForm();
-        displayParties();
-        modal.style.display = 'none';
-}
-
-createSubmitBtn.addEventListener('click', createParty);
