@@ -16,12 +16,11 @@ body {
   background: white;
   opacity: 0.75;
   height: 60vh;
-  border
 }
 
-.main {
+/* .main {
 
-}
+} */
 
 .modal {
     display: none; /* Hidden by default */
