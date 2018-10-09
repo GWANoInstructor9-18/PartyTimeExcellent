@@ -153,12 +153,4 @@ function clearCreateForm() {
     getDescription.value = '';
 };
 
-function newPartyId() {
-  for (let i = 0; i <= parties.length; i++) {
-    if(newParty.id == null) {
-      newParty.Id = newParty.id[i];
-      // console.log(newParty.Id);
-    } else {
-      return;
-    }
-};
+
