@@ -154,6 +154,7 @@ function clearCreateForm() {
     getDescription.value = '';
 };
 
+
 function newPartyId(newParty) {
     if(newParty.id == null) {
       newParty.id = parties.length;
