@@ -140,7 +140,7 @@ function checkNewParty(newParty){
         clearCreateForm();
         displayParties();
         createModal.style.display = 'none';
-}
+};
 
 function clearCreateForm() {
     getEventName.value = '';
@@ -156,10 +156,9 @@ function clearCreateForm() {
 function newPartyId() {
   for (let i = 0; i <= parties.length; i++) {
     if(newParty.id == null) {
-      newParty.Id = newParty.id[i] + 1;
+      newParty.Id = newParty.id[i];
       // console.log(newParty.Id);
-    };
-    else {
+    } else {
       return;
-    };
+    }
 };
