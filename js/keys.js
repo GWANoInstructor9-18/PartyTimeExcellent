@@ -1,0 +1,1 @@
+const GMAPS_API_KEY = "AIzaSyCI8lGEinZy_MTD48qgqsffX2CFgYzR_Cw";

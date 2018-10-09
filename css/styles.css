@@ -12,16 +12,15 @@ body {
 }
 
 
-.sections {
-  margin: auto;
+.block-section {
+  padding: -5px;
   background: white;
   opacity: 0.75;
-  height: 60vh;
+  min-height: 25rem;
+  border-style: solid;
+  border-width: 3px;
 }
 
-/* .main {
-
-} */
 
 .modal {
     display: none; /* Hidden by default */
