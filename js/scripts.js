@@ -82,7 +82,7 @@ constructor(){
     checkAgeRadios(getAgeRadios, newParty);
     checkPrivateRadios(getPrivateRadios, newParty);
 
-    newParty.id = 'INTEGRATE THIS FEATURE PLEASE' //PLACEHOLDER;
+    newParty.id = null;
     newParty.creator = 'INTEGRATE THIS FEATURE PLEASE' //PLACEHOLDER;
     newParty.eventName = getEventName;
     newParty.addres = getStreetAddress;
@@ -139,6 +139,7 @@ function checkNewParty(newParty){
         parties[parties.length] = newParty;
         clearCreateForm();
         displayParties();
+        newPartyId(newParty);
         createModal.style.display = 'none';
 };
 
@@ -153,12 +154,10 @@ function clearCreateForm() {
     getDescription.value = '';
 };
 
-function newPartyId() {
-  for (let i = 0; i <= parties.length; i++) {
+
+function newPartyId(newParty) {
     if(newParty.id == null) {
-      newParty.Id = newParty.id[i];
-      // console.log(newParty.Id);
+      newParty.id = parties.length;
     } else {
       return;
-    }
-};
+}};
