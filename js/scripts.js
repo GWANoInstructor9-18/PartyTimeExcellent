@@ -82,7 +82,7 @@ constructor(){
     checkAgeRadios(getAgeRadios, newParty);
     checkPrivateRadios(getPrivateRadios, newParty);
 
-    newParty.id = 'INTEGRATE THIS FEATURE PLEASE' //PLACEHOLDER;
+    newParty.id = null;
     newParty.creator = 'INTEGRATE THIS FEATURE PLEASE' //PLACEHOLDER;
     newParty.eventName = getEventName;
     newParty.addres = getStreetAddress;
@@ -139,6 +139,7 @@ function checkNewParty(newParty){
         parties[parties.length] = newParty;
         clearCreateForm();
         displayParties();
+        newPartyId(newParty);
         createModal.style.display = 'none';
 };
 
@@ -154,3 +155,12 @@ function clearCreateForm() {
 };
 
 
+<<<<<<< HEAD
+=======
+function newPartyId(newParty) {
+    if(newParty.id == null) {
+      newParty.id = parties.length;
+    } else {
+      return;
+}};
+>>>>>>> 9713eb6a1c05213952b669ca10405c1fee25732b
