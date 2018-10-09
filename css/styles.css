@@ -58,3 +58,14 @@ body {
     text-decoration: none;
     cursor: pointer;
 }
+
+.column {
+    border-style: solid;
+    text-align: center;
+}
+
+.map {
+  border-style: solid;
+  width: 100%;
+  text-align: center;
+}
