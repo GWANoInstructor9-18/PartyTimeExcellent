@@ -26,17 +26,17 @@ createBtn.onclick = function() {
     getAgeRadios[1].checked = false;
     getPrivateRadios[0].checked = false;
     getPrivateRadios[1].checked = false;
-}
+};
 
 closeSpan.onclick = function() {
     createModal.style.display = 'none';
-}
+};
 
 window.onclick = function(event) {
     if (event.target == createModal) {
         createModal.style.display = 'none';
-    }
-}
+    };
+};
 
 //FUNCTIONS
 
@@ -51,7 +51,7 @@ function displayParties(){
     let partyLi = document.createElement('li');
 
     //CHECKS IF BEING DISPLAYED, WILL NOT DUPLICATE ONSCREEN
-    if(parties[i].onScreen === false){
+    if(parties[i].onScreen === false) {
         parties[i].onScreen = true;
         partyLi.append(eventName, time, date, description);
         partyDiv.append(partyLi);
@@ -59,11 +59,11 @@ function displayParties(){
 
     };
     };
-}
+};
 
 function createParty(){
     new Party();
-}
+};
 
 class Party{
 constructor(){
@@ -82,7 +82,7 @@ constructor(){
     checkAgeRadios(getAgeRadios, newParty);
     checkPrivateRadios(getPrivateRadios, newParty);
 
-    newParty.id = 'INTEGRATE THIS FEATURE PLEASE' //PLACEHOLDER;
+    newParty.id = null;
     newParty.creator = 'INTEGRATE THIS FEATURE PLEASE' //PLACEHOLDER;
     newParty.eventName = getEventName;
     newParty.addres = getStreetAddress;
@@ -96,8 +96,8 @@ constructor(){
 
     checkNewParty(newParty);
 
-}
-}
+};
+};
 
 function checkAgeRadios(getAgeRadios, newParty){
     //CHECKS RADIO BUTTONS
@@ -109,9 +109,9 @@ function checkAgeRadios(getAgeRadios, newParty){
         newParty.ageRestricted = true;
     }else {
         newParty.ageRestricted = false;
-    }
+    };
 
-}
+};
 
 function checkPrivateRadios(getPrivateRadios, newParty){
     //CHECKS RADIO BUTTONS
@@ -123,8 +123,8 @@ function checkPrivateRadios(getPrivateRadios, newParty){
         newParty.private = true;
     }else {
         newParty.private = false;
-    }
-}
+    };
+};
 
 function checkNewParty(newParty){
     let values = Object.values(newParty);
@@ -136,13 +136,17 @@ function checkNewParty(newParty){
         }
         else {continue;}
     };
+
+    }
+
         parties[parties.length] = newParty;
         clearCreateForm();
         displayParties();
+        newPartyId(newParty);
         createModal.style.display = 'none';
-}
+};
 
-function clearCreateForm(){
+function clearCreateForm() {
     getEventName.value = '';
     getStreetAddress.value = '';
     getCity.value = '';
@@ -151,4 +155,16 @@ function clearCreateForm(){
     getDate.value = '';
     getTime.value = '';
     getDescription.value = '';
+
 }
+
+};
+
+
+function newPartyId(newParty) {
+    if(newParty.id == null) {
+      newParty.id = parties.length;
+    } else {
+      return;
+}};
+
