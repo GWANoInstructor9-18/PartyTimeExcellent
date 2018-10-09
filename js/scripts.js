@@ -49,6 +49,7 @@ function displayParties(){
     let description = parties[i].description;
     let partyDiv = document.createElement('div');
     let partyLi = document.createElement('li');
+    let liBtn = document.createElement('div');
 
     //CHECKS IF BEING DISPLAYED, WILL NOT DUPLICATE ONSCREEN
     if(parties[i].onScreen === false){
@@ -82,7 +83,7 @@ constructor(){
     checkAgeRadios(getAgeRadios, newParty);
     checkPrivateRadios(getPrivateRadios, newParty);
 
-    newParty.id = 'INTEGRATE THIS FEATURE PLEASE' //PLACEHOLDER;
+    newParty.id = null; 
     newParty.creator = 'INTEGRATE THIS FEATURE PLEASE' //PLACEHOLDER;
     newParty.eventName = getEventName;
     newParty.addres = getStreetAddress;
@@ -139,6 +140,7 @@ function checkNewParty(newParty){
         parties[parties.length] = newParty;
         clearCreateForm();
         displayParties();
+        newPartyId(newParty);
         createModal.style.display = 'none';
 }
 
@@ -152,3 +154,10 @@ function clearCreateForm(){
     getTime.value = '';
     getDescription.value = '';
 }
+
+function newPartyId(newParty) {
+    if(newParty.id == null) {
+      newParty.id = parties.length;
+    } else {
+      return;
+}};
