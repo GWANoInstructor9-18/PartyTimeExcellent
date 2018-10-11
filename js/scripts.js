@@ -154,13 +154,3 @@ function clearCreateForm() {
     getDescription.value = '';
 };
 
-
-<<<<<<< HEAD
-=======
-function newPartyId(newParty) {
-    if(newParty.id == null) {
-      newParty.id = parties.length;
-    } else {
-      return;
-}};
->>>>>>> 9713eb6a1c05213952b669ca10405c1fee25732b
