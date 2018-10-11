@@ -66,3 +66,7 @@ li {
   font-family: 'Chewy', cursive;
   height: 100px;
 }
+
+#map {
+  height: 100%;
+}
