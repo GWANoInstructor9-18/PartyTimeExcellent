@@ -6,13 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="https://fonts.googleapis.com/css?family=Chewy" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
   <title>party</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <!-- HEADER -->
-  <div class="container">
+  <div class="nav-bar">
     <h1 class="text-center header">Party Time Excellent</h1>
   </div>
 
@@ -21,18 +22,22 @@
     <div class="container-fluid text-center main">
       <div class="row">
 
-        <!-- BUTTON DIV -->
+        <!-- MAP DIV -->
         <div class="col-sm-5 sections">
           <br>
-          <button id="createBtn" class="btn-primary">Create a party</button>
+            Map will go here
+            <img class="garth" src="img/garth-toon.png">
           <br>
           <br>
-          <button id="findBtn" class="btn-primary">Find a party</button>
         </div>
 
         <!-- LIST DIV -->
         <div class="col-sm-5 col-sm-push-1 sections">
-          list of parties go here
+          <br>
+          <button id="createBtn" class="btn-primary">Create a party</button>
+          <br>
+          <h2 class="list-h2"><u>List of parties near you!</u></h2>
+          <br>
           <ul id="partyList">
           </ul>
         </div>
@@ -40,15 +45,6 @@
     </div>
   </section>
   <br>
-
-  <!-- MAP DIV -->
-  <section class="sections col-sm-7">
-    <div class="container-fluid text-center">
-      <div class="map">
-  Map will go here
-      </div>
-    </div>
-  </section>
 
   <!-- CREATE MODAL -->
   <div id='createModal' class='modal'>
@@ -91,6 +87,7 @@
                 <input type="time" id="getTime"><br>
                 Event description:<br>
                 <input type="text" id="getDescription"><br>
+                <br>
                 <button class="btn-primary" id="createSubmitBtn" type="button">Submit</button>
               </div>
             </div>
@@ -99,6 +96,18 @@
     </div>
   </div>
 
+  <div id='infoModal' class='modal'>
+    <div class="modal-content">
+      <span class="close">&times</span>
+        <form>
+
+        </form>
+    </div>
+  </div>
+
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/scripts.js"></script>
+
 </body>
 </html>
