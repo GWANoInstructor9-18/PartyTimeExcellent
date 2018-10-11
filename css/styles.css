@@ -12,12 +12,19 @@ body {
   color: white;
 }
 
-
 .sections {
   margin: auto;
   background: white;
   opacity: 0.75;
   height: 60vh;
+}
+
+.show {
+  display;
+}
+
+.hide {
+  display: none;
 }
 
 /* .main {
