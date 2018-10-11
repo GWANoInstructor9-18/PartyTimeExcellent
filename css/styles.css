@@ -1,10 +1,11 @@
 body {
-  background-image: url("../img/party-background.jpg");
+  background-image: url("../img/party-background-three.jpg");
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
+  margin: 0 auto;
 }
-
+/* Header and Nav */
 .header {
   background-color: rgb(24, 140, 129);
   padding: 10px 10px;
@@ -12,18 +13,20 @@ body {
   color: white;
 }
 
+.nav-bar {
+  padding-bottom: 30px;
+  margin-top: -20px;
+}
 
 .sections {
   margin: auto;
-  background: white;
-  opacity: 0.75;
+  background: rgb(242, 152, 99);
+  opacity: 0.89;
   height: 60vh;
+  overflow: auto;
 }
-
 /* .main {
-
 } */
-
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -44,10 +47,9 @@ body {
     border: 1px solid #888;
     width: 35%; /* Could be more or less, depending on screen size */
 }
-
 /* closes modal */
 .close {
-    color: #aaa;
+    color: navy;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -65,4 +67,15 @@ li {
   list-style: none;
   font-family: 'Chewy', cursive;
   height: 100px;
+  margin-bottom: 20px;
+  background: rgb(146, 177, 73);
+  font-size: 22px;
+  /* color: white; */
 }
+
+@media(min-width: 768px){
+  li {
+    display: flex;
+    align-items: stretch;
+    height: 160px;
+  }

@@ -155,4 +155,4 @@ function newPartyId(newParty) {
       newParty.id = parties.length;
     } else {
       return;
-}};
+}}; 
