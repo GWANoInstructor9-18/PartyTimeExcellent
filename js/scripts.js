@@ -58,11 +58,6 @@ function displayParties(){
 };
 
 function createParty(){
-    new Party();
-};
-
-class Party{
-constructor(){
     let newParty = {},
         getEventName = document.getElementById('getEventName').value,
         getStreetAddress = document.getElementById('getStreetAddress').value,
@@ -91,9 +86,10 @@ constructor(){
     newParty.onScreen = false;
 
     checkNewParty(newParty);
+    
+};
 
-};
-};
+
 
 function checkAgeRadios(getAgeRadios, newParty){
     //CHECKS RADIO BUTTONS
