@@ -34,9 +34,19 @@ body {
   overflow: auto;
 }
 
+
+.show {
+  display;
+}
+
+.hide {
+  display: none;
+}
+
 .list-h2 {
   font-family: 'Permanent Marker', cursive;
 }
+
 
 .create-modal {
     display: none; /* Hidden by default */

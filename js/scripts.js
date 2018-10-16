@@ -3,18 +3,29 @@ let parties = [{id: 1,creator: 'Zac',eventName: ' Halloween',address: ' 700 Van 
 
 //VARIABLES
 const createModal = document.getElementById('createModal'),
-    closeSpan = document.getElementsByClassName('close')[0],
+    closeSpan = document.getElementsByClassName('close'),
+    infoClose =document.getElementById('endMe');
     createBtn = document.getElementById('createBtn'),
     createSubmitBtn = document.getElementById('createSubmitBtn'),
     findBtn = document.getElementById('findBtn'),
     partyList = document.getElementById('partyList'),
     getAgeRadios = document.getElementsByName('ageCheck'),
     getPrivateRadios = document.getElementsByName('privateCheck');
+    infoModal = document.getElementById('infoModal');
 
 //EVENT LISTENERS
 window.onload = displayParties();
 
+//Executes the createParty function on click
 createSubmitBtn.addEventListener('click', createParty);
+
+//lets the create a party modal accept the enter key as a submit
+createModal.addEventListener('keyup', e => {
+  e.preventDefault();
+  if(e.keyCode === 13) {
+    createParty();
+  }
+});
 
 //CREATE MODAL LISTENERS
 createBtn.onclick = function() {
@@ -25,16 +36,25 @@ createBtn.onclick = function() {
     getPrivateRadios[1].checked = false;
 };
 
-closeSpan.onclick = function() {
-    createModal.style.display = 'none';
-};
+//targets the close span and hides the modal
+for (var i = 0; i < closeSpan.length; i++) {
+  closeSpan[i].onclick = function() {
+      createModal.style.display = 'none';
+  };
+}
 
+
+//closes the info modal and ratifies it's classList
+infoClose.addEventListener('click', e => {
+  infoModal.classList = 'hide notStyle info-modal';
+});
+
+//hides the createModal if clicked outside of any entry
 window.onclick = function(event) {
     if (event.target == createModal) {
         createModal.style.display = 'none';
     };
 };
-//FUNCTIONS
 
 //CREATE MODAL LOGIC
 function displayParties(){
@@ -45,6 +65,7 @@ function displayParties(){
     let description = parties[i].description;
     let partyDiv = document.createElement('div');
     let partyLi = document.createElement('li');
+    partyLi.classList = 'show notStyle';
 
     //CHECKS IF BEING DISPLAYED, WILL NOT DUPLICATE ONSCREEN
     if(parties[i].onScreen === false) {
@@ -57,7 +78,9 @@ function displayParties(){
     };
 };
 
+//creates the party and puts it into the list parties array
 function createParty(){
+  //VARIABLES
     let newParty = {},
         getEventName = document.getElementById('getEventName').value,
         getStreetAddress = document.getElementById('getStreetAddress').value,
@@ -70,9 +93,11 @@ function createParty(){
         getTime = document.getElementById('getTime').value,
         getDescription = document.getElementById('getDescription').value;
 
+//CHECKS
     checkAgeRadios(getAgeRadios, newParty);
     checkPrivateRadios(getPrivateRadios, newParty);
 
+//sets entries of form to lists
     newParty.id = null;
     newParty.creator = 'INTEGRATE THIS FEATURE PLEASE' //PLACEHOLDER;
     newParty.eventName = getEventName;
@@ -86,11 +111,9 @@ function createParty(){
     newParty.onScreen = false;
 
     checkNewParty(newParty);
-    
 };
 
-
-
+//logic for making the buttons
 function checkAgeRadios(getAgeRadios, newParty){
     //CHECKS RADIO BUTTONS
     if (getAgeRadios[0].checked == false && getAgeRadios[1].checked == false){
@@ -104,6 +127,7 @@ function checkAgeRadios(getAgeRadios, newParty){
     };
 
 };
+
 
 function checkPrivateRadios(getPrivateRadios, newParty){
     //CHECKS RADIO BUTTONS
@@ -153,3 +177,14 @@ function newPartyId(newParty) {
     } else {
       return;
 }};
+
+//toggles the modal display when the X is clicked
+partyList.addEventListener('click', (e) => {
+  infoModal.classList.toggle('show');
+});
+
+function showInfo() {
+  //match the entered values and append them to the p tags
+    const displayEventName = document.querySelector('#displayEventName');
+    parties.eventName.append(displayEventName);
+};
