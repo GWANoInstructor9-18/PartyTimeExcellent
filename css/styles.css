@@ -35,9 +35,9 @@ body {
 }
 
 
-.show {
+/* .show {
   display;
-}
+} */
 
 .hide {
   display: none;
@@ -115,3 +115,4 @@ li {
     align-items: stretch;
     height: 160px;
   }
+}
