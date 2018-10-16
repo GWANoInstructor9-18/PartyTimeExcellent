@@ -37,11 +37,11 @@ createBtn.onclick = function() {
 };
 
 //targets the close span and hides the modal
-for (var i = 0; i < closeSpan.length; i++) {
+for (let i = 0; i < closeSpan.length; i++) {
   closeSpan[i].onclick = function() {
       createModal.style.display = 'none';
   };
-}
+};
 
 
 //closes the info modal and ratifies it's classList
@@ -182,6 +182,14 @@ function newPartyId(newParty) {
 partyList.addEventListener('click', (e) => {
   infoModal.classList.toggle('show');
 });
+
+// function toggleModal() {
+//
+// }
+
+// infoModal.addEventListener('click', (e) => {
+//   infoModal.classList.toggle('show');
+// });
 
 function showInfo() {
   //match the entered values and append them to the p tags

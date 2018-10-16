@@ -5,6 +5,10 @@ body {
   background-repeat: no-repeat;
 }
 
+.h1, .h2, .h3, h1, h2, h3 {
+  margin-top: 0px;
+}
+
 .header {
   background-color: rgb(24, 140, 129);
   padding: 10px 10px;
@@ -33,7 +37,6 @@ body {
   height: 60vh;
   overflow: auto;
 }
-
 
 .show {
   display;
