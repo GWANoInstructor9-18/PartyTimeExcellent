@@ -1,5 +1,5 @@
 body {
-  background-image: url("../img/party-background.jpg");
+  background-image: url("../img/party-background-three.jpg");
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
@@ -12,12 +12,28 @@ body {
   color: white;
 }
 
+.nav-bar {
+  margin: 0;
+}
+
+.popper {
+  float: right;
+  height: 40px;
+}
+
+.garth {
+  height: 40%;
+  float: right;
+}
+
 .sections {
   margin: auto;
-  background: white;
-  opacity: 0.75;
+  background: rgb(242, 152, 99);
+  opacity: 0.89;
   height: 60vh;
+  overflow: auto;
 }
+
 
 .show {
   display;
@@ -27,9 +43,10 @@ body {
   display: none;
 }
 
-/* .main {
+.list-h2 {
+  font-family: 'Permanent Marker', cursive;
+}
 
-} */
 
 .create-modal {
     display: none; /* Hidden by default */
@@ -66,7 +83,7 @@ body {
 
 /* closes modal */
 .close {
-    color: #aaa;
+    color: navy;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -80,8 +97,21 @@ body {
 }
 
 li {
+  border-radius: 15px;
   border: 1px solid #888;
   list-style: none;
   font-family: 'Chewy', cursive;
   height: 100px;
+  margin-bottom: 20px;
+  background: rgb(146, 177, 73);
+  font-size: 22px;
+  /* color: white; */
+
 }
+
+@media(min-width: 768px){
+  li {
+    display: flex;
+    align-items: stretch;
+    height: 160px;
+  }

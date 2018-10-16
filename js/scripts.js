@@ -157,7 +157,8 @@ function checkNewParty(newParty){
         displayParties();
         newPartyId(newParty);
         createModal.style.display = 'none';
-};
+    }
+
 
 function clearCreateForm() {
     getEventName.value = '';
