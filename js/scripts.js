@@ -84,7 +84,7 @@ function initMap() {
 //         }
 //         map.setCenter(results[0].geometry.location);
 //     })
- 
+
 //     var marker = new google.maps.Marker({
 //         map: map,
 //         position: results[0].geometry.location
@@ -193,7 +193,7 @@ function checkNewParty(newParty){
         displayParties();
         newPartyId(newParty);
         createModal.style.display = 'none';
-    }
+    };
 
 
 function clearCreateForm() {
