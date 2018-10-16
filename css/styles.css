@@ -5,6 +5,14 @@ body {
   background-repeat: no-repeat;
 }
 
+.h1, .h2, .h3, h1, h2, h3 {
+  margin-top: 0px;
+}
+
+#map {
+  height: 100%;
+}
+
 .header {
   background-color: rgb(24, 140, 129);
   padding: 10px 10px;
@@ -33,7 +41,6 @@ body {
   height: 60vh;
   overflow: auto;
 }
-
 
 .show {
   display;
@@ -115,6 +122,4 @@ li {
     align-items: stretch;
     height: 160px;
   }
-#map {
-  height: 100%;
 }
