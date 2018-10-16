@@ -37,9 +37,12 @@ createBtn.onclick = function() {
 };
 
 //targets the close span and hides the modal
-closeSpan.onclick = function() {
-    createModal.style.display = 'none';
-};
+for (var i = 0; i < closeSpan.length; i++) {
+  closeSpan[i].onclick = function() {
+      createModal.style.display = 'none';
+  };
+}
+
 
 //closes the info modal and ratifies it's classList
 infoClose.addEventListener('click', e => {
@@ -183,6 +186,4 @@ function showInfo() {
   //match the entered values and append them to the p tags
     const displayEventName = document.querySelector('#displayEventName');
     parties.eventName.append(displayEventName);
-
-  //if statement for private event
 };
