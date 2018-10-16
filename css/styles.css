@@ -125,3 +125,6 @@ li:hover {
     align-items: stretch;
     height: 160px;
   }
+#map {
+  height: 100%;
+}

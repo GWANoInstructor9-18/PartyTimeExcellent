@@ -56,6 +56,42 @@ window.onclick = function(event) {
     };
 };
 
+// MAP STUFFS!
+var map,
+    geocoder;
+function initMap() {
+    geocoder = new google.maps.Geocoder();
+    // let address = prompt("Gimme an address!");
+    // let myCoords = convertAddressToLatLong(address);
+    var latLng = new google.maps.LatLng(36.732, -119.785); //bitwise!
+    var mapOptions = {
+        zoom: 15,
+        center: latLng
+    }
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+}
+
+// function reDrawMap(address) {
+//     var myCoords = [];
+//     geocoder = new google.maps.Geocoder();
+//     geocoder.geocode({'address': address}, function(results, status) {
+//         if (status == google.maps.GeocoderStatus.OK) {
+//             myCoords[0] = results[0].geometry.location.lat();
+//             myCoords[1] = results[0].geometry.location.lng();
+//             alert("Request successful.")
+//         } else {
+//             alert("Request failed.");
+//         }
+//         map.setCenter(results[0].geometry.location);
+//     })
+ 
+//     var marker = new google.maps.Marker({
+//         map: map,
+//         position: results[0].geometry.location
+//     })
+// }
+
+//FUNCTIONS
 //CREATE MODAL LOGIC
 function displayParties(){
     for(let i = 0; i <= (parties.length - 1); i++){
