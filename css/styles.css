@@ -5,6 +5,10 @@ body {
   background-repeat: no-repeat;
 }
 
+.h1, .h2, .h3, h1, h2, h3 {
+ margin-top: 0px;
+}
+
 .header {
   background-color: rgb(24, 140, 129);
   padding: 10px 10px;
@@ -27,10 +31,11 @@ body {
 }
 
 .sections {
+  border-radius: 15px;
   margin: auto;
   background: rgb(242, 152, 99);
   opacity: 0.89;
-  height: 60vh;
+  height: 78vh;
   overflow: auto;
 }
 
@@ -97,16 +102,21 @@ body {
 }
 
 li {
+  display: flex;
+  align-items: stretch;
   border-radius: 15px;
   border: 1px solid #888;
   list-style: none;
   font-family: 'Chewy', cursive;
   height: 100px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   background: rgb(146, 177, 73);
   font-size: 22px;
-  /* color: white; */
+  box-shadow: 5px 10px;
+}
 
+li:hover {
+  background: rgb(191, 70, 59);
 }
 
 @media(min-width: 768px){
