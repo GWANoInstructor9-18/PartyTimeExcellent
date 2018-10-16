@@ -37,11 +37,11 @@ createBtn.onclick = function() {
 };
 
 //targets the close span and hides the modal
-for (var i = 0; i < closeSpan.length; i++) {
+for (let i = 0; i < closeSpan.length; i++) {
   closeSpan[i].onclick = function() {
       createModal.style.display = 'none';
   };
-}
+};
 
 
 //closes the info modal and ratifies it's classList
@@ -84,7 +84,7 @@ function initMap() {
 //         }
 //         map.setCenter(results[0].geometry.location);
 //     })
- 
+
 //     var marker = new google.maps.Marker({
 //         map: map,
 //         position: results[0].geometry.location
@@ -193,7 +193,7 @@ function checkNewParty(newParty){
         displayParties();
         newPartyId(newParty);
         createModal.style.display = 'none';
-    }
+    };
 
 
 function clearCreateForm() {
@@ -218,6 +218,14 @@ function newPartyId(newParty) {
 partyList.addEventListener('click', (e) => {
   infoModal.classList.toggle('show');
 });
+
+// function toggleModal() {
+//
+// }
+
+// infoModal.addEventListener('click', (e) => {
+//   infoModal.classList.toggle('show');
+// });
 
 function showInfo() {
   //match the entered values and append them to the p tags
