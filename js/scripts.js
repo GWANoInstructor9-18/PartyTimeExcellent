@@ -13,6 +13,8 @@ const createModal = document.getElementById('createModal'),
     getPrivateRadios = document.getElementsByName('privateCheck');
     infoModal = document.getElementById('infoModal');
 
+var map,
+    geocoder;
 //EVENT LISTENERS
 window.onload = displayParties();
 
@@ -56,13 +58,10 @@ window.onclick = function(event) {
     };
 };
 
-// MAP STUFFS!
-var map,
-    geocoder;
-function initMap() {
+
+function initMap(address = undefined) {
+    console.log(address);
     geocoder = new google.maps.Geocoder();
-    // let address = prompt("Gimme an address!");
-    // let myCoords = convertAddressToLatLong(address);
     var latLng = new google.maps.LatLng(36.732, -119.785); //bitwise!
     var mapOptions = {
         zoom: 15,
@@ -70,6 +69,21 @@ function initMap() {
     }
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 }
+
+// function buildMapObject()
+
+// basic minimum map initialization, and centers map on bitwise
+// var map,
+//     geocoder;
+// function initMap() {
+//     geocoder = new google.maps.Geocoder();
+//     var latLng = new google.maps.LatLng(36.732, -119.785); //bitwise!
+//     var mapOptions = {
+//         zoom: 15,
+//         center: latLng
+//     }
+//     map = new google.maps.Map(document.getElementById('map'), mapOptions);
+// }
 
 // function reDrawMap(address) {
 //     var myCoords = [];
