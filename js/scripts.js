@@ -14,7 +14,7 @@ const createModal = document.getElementById('createModal'),
     infoModal = document.getElementById('infoModal');
 
 var map,
-    geocoder;
+    geocoder = new google.maps.Geocoder();
 //EVENT LISTENERS
 window.onload = displayParties();
 
@@ -59,15 +59,22 @@ window.onclick = function(event) {
 };
 
 
-function initMap(address = undefined) {
-    console.log(address);
-    geocoder = new google.maps.Geocoder();
-    var latLng = new google.maps.LatLng(36.732, -119.785); //bitwise!
+function initMap() {
+    map = drawMap(36.732, -119.785); //bitwise
+}
+
+function drawMap(lat, lng) {
+    var latlng = new google.maps.LatLng(lat, lng);
     var mapOptions = {
         zoom: 15,
-        center: latLng
+        center: latlng
     }
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    return (new google.maps.Map(document.getElementById('map'), mapOptions));
+}
+
+function geocodeAddress(address) {
+    //geocode address to lat/lng
+    //return a latlng object (new google.maps.LatLng(lat, lng);) 
 }
 
 // function buildMapObject()
