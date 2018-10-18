@@ -1,5 +1,50 @@
 //DUMMY DATA
-let parties = [{id: 1,creator: 'Zac',eventName: ' Halloween',address: ' 700 Van Ness',city: ' Fresno',state: ' CA',zip: ' 93721',ageRestricted: true,private: false,date: ' 10/31/2018',time: ' 7:00pm',description: ' This is a generic party.',onScreen: false},{id: 2,creator: ' Phil',eventName: ' Kegger',address: ' 123 Test St.',city: 'Visalia',state: 'CA',zip: ' 93291',ageRestricted: false,private: true,date: '12/25/2018',time: ' 12:00pm',description: 'This is a generic christmas kegger.',onScreen: false},{id: 3,creator: 'John',eventName: ' Runescape LAN',address: ' 999 Johns house',city: ' Tulare',state: ' CA',zip: ' 93724',ageRestricted: true,private: true,date: '10/01/2018',time: ' 9:00am',description: ' This is an extra special LAN party.',onScreen: false}];
+let parties = [{
+    id: 1,
+    creator: 'Zac',
+    eventName: ' Halloween',
+    address: ' 700 Van Ness',
+    city: ' Fresno',
+    state: ' CA',
+    zip: ' 93721',
+    ageRestricted: true,
+    private: false,
+    date: ' 10/31/2018',
+    time: ' 7:00pm',
+    description: ' This is a generic party.',
+    onScreen: false,
+    coords: [36.732, -119.785]
+    },{
+    id: 2,
+    creator: ' Phil',
+    eventName: ' Kegger',
+    address: ' 123 Test St.',
+    city: 'Visalia',
+    state: 'CA',
+    zip: ' 93291',
+    ageRestricted: false,
+    private: true,
+    date: '12/25/2018',
+    time: ' 12:00pm',
+    description: 'This is a generic christmas kegger.',
+    onScreen: false,
+    coords: [36.370526, -119.394231]    
+    },{
+    id: 3,
+    creator: 'John',
+    eventName: ' Runescape LAN',
+    address: ' 999 Johns house',
+    city: ' Tulare',
+    state: ' CA',
+    zip: ' 93724',
+    ageRestricted: true,
+    private: true,
+    date: '10/01/2018',
+    time: ' 9:00am',
+    description: ' This is an extra special LAN party.',
+    onScreen: false,
+    coords: [36.741261, -119.781456]
+}];
 
 //VARIABLES
 const createModal = document.getElementById('createModal'),
@@ -58,13 +103,22 @@ window.onclick = function(event) {
     };
 };
 
+// MAP RELATED FUNCTIONS
+// how to's:
+// draw a map from lat/lng: map = drawMap([coordinate array]);
+// convert address to lat/lng: myCoords = geocodeAddress("string address");
+// 
+// TODO'S
+// create function for placing all public party markers on the map
+// create logic to geocode addresses when a new party is created
+// create array of coords for parties in the list, or create logic to put all public party pins on the map
 
 function initMap() {
-    map = drawMap(36.732, -119.785); //bitwise
+    map = drawMap([36.732, -119.785]); //bitwise
 }
 
-function drawMap(lat, lng) {
-    var latlng = new google.maps.LatLng(lat, lng);
+function drawMap(myCoords) {
+    var latlng = new google.maps.LatLng(myCoords[0], myCoords[1]);
     var mapOptions = {
         zoom: 15,
         center: latlng
@@ -74,64 +128,41 @@ function drawMap(lat, lng) {
 
 function geocodeAddress(address) {
     //geocode address to lat/lng
-    //return a latlng object (new google.maps.LatLng(lat, lng);) 
+    var myCoords = [];
+    geocoder.geocode({'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            myCoords[0] = results[0].geometry.location.lat();
+            myCoords[1] = results[0].geometry.location.lng();
+            alert("Request successful.")
+        } else {
+            alert("Request failed.");
+        }
+        // map.setCenter(results[0].geometry.location);
+    });
+    //return the coords in an array
+    return myCoords;
 }
-
-// function buildMapObject()
-
-// basic minimum map initialization, and centers map on bitwise
-// var map,
-//     geocoder;
-// function initMap() {
-//     geocoder = new google.maps.Geocoder();
-//     var latLng = new google.maps.LatLng(36.732, -119.785); //bitwise!
-//     var mapOptions = {
-//         zoom: 15,
-//         center: latLng
-//     }
-//     map = new google.maps.Map(document.getElementById('map'), mapOptions);
-// }
-
-// function reDrawMap(address) {
-//     var myCoords = [];
-//     geocoder = new google.maps.Geocoder();
-//     geocoder.geocode({'address': address}, function(results, status) {
-//         if (status == google.maps.GeocoderStatus.OK) {
-//             myCoords[0] = results[0].geometry.location.lat();
-//             myCoords[1] = results[0].geometry.location.lng();
-//             alert("Request successful.")
-//         } else {
-//             alert("Request failed.");
-//         }
-//         map.setCenter(results[0].geometry.location);
-//     })
-
-//     var marker = new google.maps.Marker({
-//         map: map,
-//         position: results[0].geometry.location
-//     })
-// }
 
 //FUNCTIONS
 //CREATE MODAL LOGIC
 function displayParties(){
     for(let i = 0; i <= (parties.length - 1); i++){
-    let eventName = parties[i].eventName;
-    let time = parties[i].time;
-    let date = parties[i].date;
-    let description = parties[i].description;
-    let partyDiv = document.createElement('div');
-    let partyLi = document.createElement('li');
-    partyLi.classList = 'show notStyle';
+        let eventName = parties[i].eventName;
+        let time = parties[i].time;
+        let date = parties[i].date;
+        let description = parties[i].description;
+        let partyDiv = document.createElement('div');
+        let partyLi = document.createElement('li');
+        partyLi.classList = 'show notStyle';
 
-    //CHECKS IF BEING DISPLAYED, WILL NOT DUPLICATE ONSCREEN
-    if(parties[i].onScreen === false) {
-        parties[i].onScreen = true;
-        partyLi.append(eventName, time, date, description);
-        partyDiv.append(partyLi);
-        partyList.appendChild(partyLi);
+        //CHECKS IF BEING DISPLAYED, WILL NOT DUPLICATE ONSCREEN
+        if(parties[i].onScreen === false) {
+            parties[i].onScreen = true;
+            partyLi.append(eventName, time, date, description);
+            partyDiv.append(partyLi);
+            partyList.appendChild(partyLi);
 
-    };
+        };
     };
 };
 
@@ -166,6 +197,8 @@ function createParty(){
     newParty.time = getTime;
     newParty.description = getDescription;
     newParty.onScreen = false;
+
+//coordinate construction
 
     checkNewParty(newParty);
 };
