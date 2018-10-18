@@ -13,7 +13,7 @@ let parties = [{
     time: ' 7:00pm',
     description: ' This is a generic party.',
     onScreen: false,
-    coords: [36.732, -119.785]
+    coords: {lat: 36.732, lng: -119.785}
     },{
     id: 2,
     creator: ' Phil',
@@ -28,7 +28,7 @@ let parties = [{
     time: ' 12:00pm',
     description: 'This is a generic christmas kegger.',
     onScreen: false,
-    coords: [36.370526, -119.394231]    
+    coords: {lat: 36.370526, lng: -119.394231}
     },{
     id: 3,
     creator: 'John',
@@ -43,7 +43,7 @@ let parties = [{
     time: ' 9:00am',
     description: ' This is an extra special LAN party.',
     onScreen: false,
-    coords: [36.741261, -119.781456]
+    coords: {lat: 36.741261, lng: -119.781456}
 }];
 
 //VARIABLES
@@ -63,6 +63,7 @@ var map,
 
 //EVENT LISTENERS
 window.onload = displayParties();
+window.onload = drawMap([36.732, -119.785]);
 
 //Executes the createParty function on click
 createSubmitBtn.addEventListener('click', createParty);
@@ -141,7 +142,7 @@ function geocodeAddress(address) {
         }
         // map.setCenter(results[0].geometry.location);
     });
-    //return the coords in an array
+    //return the coords in an array or an object?
     return myCoords;
 }
 
@@ -156,6 +157,12 @@ function displayParties(){
         let partyDiv = document.createElement('div');
         let partyLi = document.createElement('li');
         partyLi.classList = 'show notStyle';
+
+        let marker = new google.maps.Marker({
+            position: parties[i].coords,
+            map: map,
+            title: parties[i].eventName
+        });
 
         //CHECKS IF BEING DISPLAYED, WILL NOT DUPLICATE ONSCREEN
         if(parties[i].onScreen === false) {
