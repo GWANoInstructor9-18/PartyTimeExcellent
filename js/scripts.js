@@ -59,7 +59,7 @@ const createModal = document.getElementById('createModal'),
     infoModal = document.getElementById('infoModal');
 
 var map,
-    geocoder;
+    geocoder = new google.maps.Geocoder();
 
 //EVENT LISTENERS
 window.onload = displayParties();
@@ -131,7 +131,6 @@ function drawMap(myCoords) {
 function geocodeAddress(address) {
     //geocode address to lat/lng
     var myCoords = [];
-    geocoder = new google.maps.Geocoder();
     geocoder.geocode({'address': address}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
             myCoords[0] = results[0].geometry.location.lat();
