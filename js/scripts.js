@@ -4,14 +4,24 @@ let parties = [{id: 1,creator: 'Zac',eventName: ' Halloween',address: ' 700 Van 
 //VARIABLES
 const createModal = document.getElementById('createModal'),
     closeSpan = document.getElementsByClassName('close'),
-    infoClose =document.getElementById('endMe');
+    infoClose =document.getElementById('endMe'),
     createBtn = document.getElementById('createBtn'),
     createSubmitBtn = document.getElementById('createSubmitBtn'),
     findBtn = document.getElementById('findBtn'),
     partyList = document.getElementById('partyList'),
     getAgeRadios = document.getElementsByName('ageCheck'),
-    getPrivateRadios = document.getElementsByName('privateCheck');
-    infoModal = document.getElementById('infoModal');
+    getPrivateRadios = document.getElementsByName('privateCheck'),
+    infoModal = document.getElementById('infoModal'),
+    displayEventName = document.querySelector('#displayEventName'),
+    displayAddress = document.querySelector('#displayStreetAddress'),
+    displayCity = document.querySelector('#displayCity'),
+    displayState = document.querySelector('#displayState'),
+    displayZip = document.querySelector('#displayZip'),
+    displayAge = document.querySelector('#displayAge'),
+    displayPrivate = document.querySelector('#displayPrivate'),
+    displayDate = document.querySelector('#displayDate'),
+    displayTime = document.querySelector('#displayTime'),
+    displayDescription = document.querySelector('#displayDescription');
 
 //EVENT LISTENERS
 window.onload = displayParties();
@@ -99,17 +109,22 @@ function displayParties(){
     let time = parties[i].time;
     let date = parties[i].date;
     let description = parties[i].description;
+    let partyId = parties[i].id;
     let partyDiv = document.createElement('div');
     let partyLi = document.createElement('li');
+    let idDiv = document.createElement('div');
     partyLi.classList = 'show notStyle';
+    //this needs to get the one specific party
+    idDiv.append(partyId);
+
+
 
     //CHECKS IF BEING DISPLAYED, WILL NOT DUPLICATE ONSCREEN
     if(parties[i].onScreen === false) {
         parties[i].onScreen = true;
-        partyLi.append(eventName, time, date, description);
+        partyLi.append(idDiv, eventName, time, date, description);
         partyDiv.append(partyLi);
         partyList.appendChild(partyLi);
-
     };
     };
 };
@@ -188,13 +203,13 @@ function checkNewParty(newParty){
         }
         else {continue;}
     };
+
         parties[parties.length] = newParty;
         clearCreateForm();
-        displayParties();
         newPartyId(newParty);
+        displayParties();
         createModal.style.display = 'none';
     };
-
 
 function clearCreateForm() {
     getEventName.value = '';
@@ -214,9 +229,9 @@ function newPartyId(newParty) {
       return;
 }};
 
-//toggles the modal display when the X is clicked
 partyList.addEventListener('click', (e) => {
   infoModal.classList.toggle('show');
+  showInfo(e);
 });
 
 // function toggleModal() {
@@ -229,6 +244,18 @@ partyList.addEventListener('click', (e) => {
 
 function showInfo() {
   //match the entered values and append them to the p tags
-    const displayEventName = document.querySelector('#displayEventName');
-    parties.eventName.append(displayEventName);
-};
+    for(let i = 0; i <= (parties.length -1); i++){
+    if(parties[i].id == e.target.children[0].textContent) {
+    displayEventName.append(parties[i].eventName);
+    displayAddress.append(parties[i].address);
+    displayCity.append(parties[i].city);
+    displayState.append(parties[i].state);
+    displayZip.append(parties[i].zip);
+    displayAge.append(parties[i].age);
+    displayPrivate.append(parties[i].private);
+    displayDate.append(parties[i].date);
+    displayTime.append(parties[i].time);
+    displayDescription.append(parties[i].description);
+} else {
+  continue;
+}}};
