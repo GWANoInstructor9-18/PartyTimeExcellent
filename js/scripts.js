@@ -57,6 +57,7 @@ for (let i = 0; i < closeSpan.length; i++) {
 //closes the info modal and ratifies it's classList
 infoClose.addEventListener('click', e => {
   infoModal.classList = 'hide notStyle info-modal';
+  clearInfoModal();
 });
 
 //hides the createModal if clicked outside of any entry
@@ -116,13 +117,14 @@ function displayParties(){
     partyLi.classList = 'show notStyle';
     //this needs to get the one specific party
     idDiv.append(partyId);
+    idDiv.classList.add('hide');
 
 
 
     //CHECKS IF BEING DISPLAYED, WILL NOT DUPLICATE ONSCREEN
     if(parties[i].onScreen === false) {
         parties[i].onScreen = true;
-        partyLi.append(idDiv, eventName, time, date, description);
+        partyLi.append(idDiv, `${eventName} , ${time}, ${date}, ${description}`);
         partyDiv.append(partyLi);
         partyList.appendChild(partyLi);
     };
@@ -242,7 +244,7 @@ partyList.addEventListener('click', (e) => {
 //   infoModal.classList.toggle('show');
 // });
 
-function showInfo() {
+function showInfo(e) {
   //match the entered values and append them to the p tags
     for(let i = 0; i <= (parties.length -1); i++){
     if(parties[i].id == e.target.children[0].textContent) {
@@ -259,3 +261,16 @@ function showInfo() {
 } else {
   continue;
 }}};
+
+function clearInfoModal() {
+  displayEventName.textContent = '';
+  displayAddress.textContent = '';
+  displayCity.textContent = '';
+  displayState.textContent = '';
+  displayZip.textContent = '';
+  displayAge.textContent = '';
+  displayPrivate.textContent = '';
+  displayDate.textContent = '';
+  displayTime.textContent = '';
+  displayDescription.textContent = '';
+};

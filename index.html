@@ -45,12 +45,11 @@
 
   <!-- CREATE MODAL -->
   <div id='createModal' class='create-modal'>
-    <div class="modal-content">
+    <div class="modal-content col-sm-12">
       <span class="close">&times</span>
-        <form>
+        <form class="col-sm-12 form">
           <div class='container'>
-            <div class='row'>
-              <div class='col-sm-2'>
+              <div class='col-sm-6'>
                 Event Name:<br>
                 <input type="text" id="getEventName"><br>
                 Street Address:<br>
@@ -64,7 +63,7 @@
                 Zip:<br>
                 <input type="text" id="getZip"><br>
               </div>
-              <div class='col-sm-2'>
+              <div class='col-sm-6'>
                 21+ party? <br>
                   <label for="Yes"></label> Yes
                   <input name="ageCheck" type="radio" value="Yes">
@@ -86,7 +85,7 @@
                 <br>
                 <button class="btn-primary" id="createSubmitBtn" type="button">Submit</button>
               </div>
-            </div>
+
           </div>
         </form>
     </div>
@@ -99,8 +98,7 @@
       <span class="close" id="endMe">&times</span>
         <form>
           <div class='container'>
-            <div class='row'>
-              <div class='col-sm-2'>
+              <div class='col-sm-6'>
                 Event Name:<br>
                 <p id="displayEventName">
                 </p> <br>
@@ -113,7 +111,7 @@
                 Zip:<br>
                 <p id="displayZip"></p> <br>
               </div>
-              <div class='col-sm-2'>
+              <div class='col-sm-6'>
                 21+ party? <br>
                 <p id="displayAge"></p>
                 Is this a private party? <br>
@@ -125,7 +123,7 @@
                 Event description:<br>
                 <p id="displayDescription"></p> <br>
               </div>
-            </div>
+
           </div>
         </form>
     </div>
