@@ -251,51 +251,52 @@ function showInfo() {
 // SLACK STUFF
 
 function sendSlackMessage(URL, message, requestor){
-		let xhr = new XMLHttpRequest();
+	let xhr = new XMLHttpRequest();
 
-		xhr.open("POST", URL, true);
+	xhr.open("POST", URL, true);
 
-		xhr.send(JSON.stringify(
+	xhr.send(JSON.stringify(
+		{
+			text: `${requestor} has requested an invite to your party!`,
+			attachments: [
 			{
-				text: `${requestor} has requested an invite to your party!`,
-				attachments: [
-						{
-								text: message,
-								fallback: "You are unable to choose a game",
-								callback_id: "",
-								color: "#3AA3E3",
-								attachment_type: "default",
-								actions: [
-										{
-												name: "Invite",
-												text: "Invite",
-												type: "button",
-												value: "Invite",
-							confirm: {
-														title: "Are you sure?",
-														text: `${requestor} will be invited to your party.`,
-														ok_text: "Yes",
-														dismiss_text: "No"
-												}
-										},
-										{
-												name: "Deny",
-												text: "Deny",
-												style: "danger",
-												type: "button",
-												value: "Deny",
-												confirm: {
-														title: "Are you sure?",
-														text: `${requestor} will be DENIED`,
-														ok_text: "Yes",
-														dismiss_text: "No"
-												}
-										}
-								]
+				text: message,
+				fallback: "You are unable to choose a game. :party-wizard:",
+				callback_id: "",
+				color: "#3AA3E3",
+				attachment_type: "default",
+				actions: [
+				{
+					name: "Invite",
+					text: "Invite",
+					type: "button",
+					value: "Invite",
+				confirm: 
+					{
+						title: "Are you sure?",
+						text: `${requestor} will be invited to your party.`,
+						ok_text: "Yes",
+						dismiss_text: "No"
+					}
+				},
+					{
+						name: "Deny",
+						text: "Deny",
+						style: "danger",
+						type: "button",
+						value: "Deny",
+						confirm: {
+								title: "Are you sure?",
+								text: `${requestor} will be DENIED`,
+								ok_text: "Yes",
+								dismiss_text: "No"
 						}
+					}
 				]
+			}
+			]
 		}
-		));
+	));
 }
 
 slackSubmitBtn.onclick = function(){
