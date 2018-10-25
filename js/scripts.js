@@ -274,3 +274,19 @@ function clearInfoModal() {
   displayTime.textContent = '';
   displayDescription.textContent = '';
 };
+
+// SLACK STUFF
+
+function sendSlackMessage(URL, message){
+	let xhr = new XMLHttpRequest();
+
+	xhr.open("POST", URL, true);
+
+	xhr.send(JSON.stringify({
+	text: message
+	}));
+}
+
+// DTS https://hooks.slack.com/services/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
+// JOHN W https://hooks.slack.com/services/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
+// ZAC G https://hooks.slack.com/services/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
