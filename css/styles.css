@@ -30,6 +30,14 @@
 
 .header-section {
   position: relative;
+}
+.h1, .h2, .h3, h1, h2, h3 {
+  margin-top: 0px;
+}
+
+
+.header {
+
   background-color: rgb(24, 140, 129);
   padding: 10px 10px;
   font-family: 'Fredericka the Great', cursive;
@@ -56,7 +64,6 @@
   overflow: auto;
   padding-bottom: 30px;
 }
-
 
 .show {
   display;
@@ -144,6 +151,7 @@ li:hover {
     /* align-items: stretch; */
     height: 120px;
   }
+
 #map {
   margin-top: 20px;
   border: 2px solid black;
@@ -161,4 +169,5 @@ li:hover {
   bottom: 0;
   min-width: 100%;
   min-height: 100%;
+
 }

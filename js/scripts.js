@@ -37,11 +37,11 @@ createBtn.onclick = function() {
 };
 
 //targets the close span and hides the modal
-for (var i = 0; i < closeSpan.length; i++) {
+for (let i = 0; i < closeSpan.length; i++) {
   closeSpan[i].onclick = function() {
       createModal.style.display = 'none';
   };
-}
+};
 
 
 //closes the info modal and ratifies it's classList
@@ -84,7 +84,7 @@ function initMap() {
 //         }
 //         map.setCenter(results[0].geometry.location);
 //     })
- 
+
 //     var marker = new google.maps.Marker({
 //         map: map,
 //         position: results[0].geometry.location
@@ -193,7 +193,7 @@ function checkNewParty(newParty){
         displayParties();
         newPartyId(newParty);
         createModal.style.display = 'none';
-    }
+    };
 
 
 function clearCreateForm() {
@@ -219,8 +219,34 @@ partyList.addEventListener('click', (e) => {
   infoModal.classList.toggle('show');
 });
 
+// function toggleModal() {
+//
+// }
+
+// infoModal.addEventListener('click', (e) => {
+//   infoModal.classList.toggle('show');
+// });
+
 function showInfo() {
   //match the entered values and append them to the p tags
-    const displayEventName = document.querySelector('#displayEventName');
-    parties.eventName.append(displayEventName);
+	const displayEventName = document.querySelector('#displayEventName');
+	parties.eventName.append(displayEventName);
 };
+
+///////////////////////////////////////////////////////////////////////////
+// SLACK STUFF
+
+function sendSlackMessage(URL, message){
+	let xhr = new XMLHttpRequest();
+
+	xhr.open("POST", URL, true);
+
+	xhr.send(JSON.stringify({
+	text: message
+	}));
+}
+
+
+// DTS https://hooks.slack.com/services/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
+// JOHN W https://hooks.slack.com/services/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
+// ZAC G https://hooks.slack.com/services/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
