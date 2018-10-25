@@ -2,22 +2,26 @@
 let parties = [{id: 1,creator: 'Zac',eventName: ' Halloween',address: ' 700 Van Ness',city: ' Fresno',state: ' CA',zip: ' 93721',ageRestricted: true,private: false,date: ' 10/31/2018',time: ' 7:00pm',description: ' This is a generic party.',onScreen: false},{id: 2,creator: ' Phil',eventName: ' Kegger',address: ' 123 Test St.',city: 'Visalia',state: 'CA',zip: ' 93291',ageRestricted: false,private: true,date: '12/25/2018',time: ' 12:00pm',description: 'This is a generic christmas kegger.',onScreen: false},{id: 3,creator: 'John',eventName: ' Runescape LAN',address: ' 999 Johns house',city: ' Tulare',state: ' CA',zip: ' 93724',ageRestricted: true,private: true,date: '10/01/2018',time: ' 9:00am',description: ' This is an extra special LAN party.',onScreen: false}];
 
 //VARIABLES
-const modal = document.getElementById('modal'),
-		closeSpan = document.getElementsByClassName('close'),
-		infoClose =document.getElementById('endMe');
-		createBtn = document.getElementById('createBtn'),
-		createSubmitBtn = document.getElementById('createSubmitBtn'),
-		findBtn = document.getElementById('findBtn'),
-		partyList = document.getElementById('partyList'),
-		getAgeRadios = document.getElementsByName('ageCheck'),
-		getPrivateRadios = document.getElementsByName('privateCheck'),
-		infoModalContent = document.getElementById('infoModalContent'),
-		createModalContent = document.getElementById('createModalContent'),
-		messageModal = document.getElementById('messageModal'),
-		inviteBtn = document.getElementById('inviteBtn')
-		slackSubmitBtn = document.getElementById('slackSubmitBtn'),
-		loginBtn = document.getElementById('loginBtn'),
-		loginModal = document.getElementById('loginModal');
+const createModal = document.getElementById('createModal'),
+    closeSpan = document.getElementsByClassName('close'),
+    infoClose =document.getElementById('endMe'),
+    createBtn = document.getElementById('createBtn'),
+    createSubmitBtn = document.getElementById('createSubmitBtn'),
+    findBtn = document.getElementById('findBtn'),
+    partyList = document.getElementById('partyList'),
+    getAgeRadios = document.getElementsByName('ageCheck'),
+    getPrivateRadios = document.getElementsByName('privateCheck'),
+    infoModal = document.getElementById('infoModalContent'),
+    displayEventName = document.querySelector('#displayEventName'),
+    displayAddress = document.querySelector('#displayStreetAddress'),
+    displayCity = document.querySelector('#displayCity'),
+    displayState = document.querySelector('#displayState'),
+    displayZip = document.querySelector('#displayZip'),
+    displayAge = document.querySelector('#displayAge'),
+    displayPrivate = document.querySelector('#displayPrivate'),
+    displayDate = document.querySelector('#displayDate'),
+    displayTime = document.querySelector('#displayTime'),
+    displayDescription = document.querySelector('#displayDescription');
 
 //EVENT LISTENERS
 window.onload = displayParties();
@@ -51,6 +55,7 @@ partyList.addEventListener('click', (e) => {
 		infoModalContent.style.display = 'block';
 		createModalContent.style.display = 'none';
 		messageModal.style.display = 'none';
+    showInfo(e);
 });
 
 //targets the close span and hides the modal
@@ -60,15 +65,24 @@ for (let i = 0; i < closeSpan.length; i++) {
 	infoModalContent.style.display = 'none';
 	createModalContent.style.display = 'none';
 	messageModal.style.display = 'none';
+  clearInfoModal();
 	};
 };
 
-//hides the modal if clicked outside of any entry
+
+//closes the info modal and ratifies it's classList
+// infoClose.addEventListener('click', e => {
+  // infoModal.classList = 'hide notStyle info-modal';
+//   clearInfoModal();
+// });
+
+//hides the createModal if clicked outside of any entry
 window.onclick = function(event) {
 	if (event.target == modal) {
 		modal.style.display = 'none';
 		infoModalContent.style.display = 'none';
 		createModalContent.style.display = 'none';
+    clearInfoModal();
 	};
 };
 
@@ -120,24 +134,30 @@ function initMap() {
 //FUNCTIONS
 //CREATE MODAL LOGIC
 function displayParties(){
-	for(let i = 0; i <= (parties.length - 1); i++){
-	let eventName = parties[i].eventName;
-	let time = parties[i].time;
-	let date = parties[i].date;
-	let description = parties[i].description;
-	let partyDiv = document.createElement('div');
-	let partyLi = document.createElement('li');
-	partyLi.classList = 'show notStyle';
+    for(let i = 0; i <= (parties.length - 1); i++){
+    let eventName = parties[i].eventName;
+    let time = parties[i].time;
+    let date = parties[i].date;
+    let description = parties[i].description;
+    let partyId = parties[i].id;
+    let partyDiv = document.createElement('div');
+    let partyLi = document.createElement('li');
+    let idDiv = document.createElement('div');
+    partyLi.classList = 'notStyle';
+    //this needs to get the one specific party
+    idDiv.append(partyId);
+    idDiv.classList.add('hide');
 
-	//CHECKS IF BEING DISPLAYED, WILL NOT DUPLICATE ONSCREEN
-	if(parties[i].onScreen === false) {
-			parties[i].onScreen = true;
-			partyLi.append(eventName, time, date, description);
-			partyDiv.append(partyLi);
-			partyList.appendChild(partyLi);
 
-	};
-	};
+
+    //CHECKS IF BEING DISPLAYED, WILL NOT DUPLICATE ONSCREEN
+    if(parties[i].onScreen === false) {
+        parties[i].onScreen = true;
+        partyLi.append(idDiv, `${eventName} , ${time}, ${date}, ${description}`);
+        partyDiv.append(partyLi);
+        partyList.appendChild(partyLi);
+    };
+    };
 };
 
 //creates the party and puts it into the list parties array
@@ -192,35 +212,36 @@ function checkAgeRadios(getAgeRadios, newParty){
 
 
 function checkPrivateRadios(getPrivateRadios, newParty){
-		//CHECKS RADIO BUTTONS
-		if (getPrivateRadios[0].checked == false && getPrivateRadios[1].checked == false){
-				newParty.private = undefined;
-				return;
-		}
-		else if(getPrivateRadios[0].checked){
-				newParty.private = true;
-		}else {
-				newParty.private = false;
-		};
+    //CHECKS RADIO BUTTONS
+    if (getPrivateRadios[0].checked == false && getPrivateRadios[1].checked == false){
+        newParty.private = undefined;
+        return;
+    }
+    else if(getPrivateRadios[0].checked){
+        newParty.private = true;
+
+    }else {
+        newParty.private = false;
+    };
 };
 
 function checkNewParty(newParty){
-		let values = Object.values(newParty);
-		for(let i = 0; i < values.length; i++) {
-				if(values[i] === '' || values[i] === undefined){
-						//NEED TO THROW ERROR HERE
-						alert('Please include all required information');
-						return;
-				}
-				else {continue;}
-		};
-				parties[parties.length] = newParty;
-				clearCreateForm();
-				displayParties();
-				newPartyId(newParty);
-				modal.style.display = 'none';
-		};
+    let values = Object.values(newParty);
+    for(let i = 0; i < values.length; i++) {
+        if(values[i] === '' || values[i] === undefined){
+            //NEED TO THROW ERROR HERE
+            alert('Please include all required information');
+            return;
+        }
+        else {continue;}
+    };
 
+        parties[parties.length] = newParty;
+        clearCreateForm();
+        newPartyId(newParty);
+        displayParties();
+        createModal.style.display = 'none';
+    };
 
 function clearCreateForm() {
 		getEventName.value = '';
@@ -240,14 +261,37 @@ function newPartyId(newParty) {
 			return;
 }};
 
+function showInfo(e) {
+  //match the entered values and append them to the p tags
+    for(let i = 0; i <= (parties.length -1); i++){
+    if(parties[i].id == e.target.children[0].textContent) {
+    displayEventName.append(parties[i].eventName);
+    displayAddress.append(parties[i].address);
+    displayCity.append(parties[i].city);
+    displayState.append(parties[i].state);
+    displayZip.append(parties[i].zip);
+    displayAge.append(parties[i].ageRestricted);
+    displayPrivate.append(parties[i].private);
+    displayDate.append(parties[i].date);
+    displayTime.append(parties[i].time);
+    displayDescription.append(parties[i].description);
+} else {
+  continue;
+}}};
 
-function showInfo() {
-	//match the entered values and append them to the p tags
-		const displayEventName = document.querySelector('#displayEventName');
-		parties.eventName.append(displayEventName);
+function clearInfoModal() {
+  displayEventName.textContent = '';
+  displayAddress.textContent = '';
+  displayCity.textContent = '';
+  displayState.textContent = '';
+  displayZip.textContent = '';
+  displayAge.textContent = '';
+  displayPrivate.textContent = '';
+  displayDate.textContent = '';
+  displayTime.textContent = '';
+  displayDescription.textContent = '';
 };
 
-///////////////////////////////////////////////////////////////////////////
 // SLACK STUFF
 
 function sendSlackMessage(URL, message, requestor){
@@ -307,8 +351,7 @@ slackSubmitBtn.onclick = function(){
 	message.value = '';
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// USERS 
+// USERS
 
 class Users {
 	constructor(){
@@ -320,5 +363,3 @@ class Users {
 // DTS https://hooks.slack.com/services/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
 // JOHN W https://hooks.slack.com/services/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
 // ZAC G https://hooks.slack.com/services/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
-
-
