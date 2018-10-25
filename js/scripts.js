@@ -51,11 +51,7 @@ createBtn.onclick = function() {
 
 //toggles the modal display when the X is clicked
 partyList.addEventListener('click', (e) => {
-		modal.style.display = 'block';
-		infoModalContent.style.display = 'block';
-		createModalContent.style.display = 'none';
-		messageModal.style.display = 'none';
-    showInfo(e);
+	showInfo(e);
 });
 
 //targets the close span and hides the modal
@@ -274,7 +270,12 @@ function showInfo(e) {
     displayPrivate.append(parties[i].private);
     displayDate.append(parties[i].date);
     displayTime.append(parties[i].time);
-    displayDescription.append(parties[i].description);
+		displayDescription.append(parties[i].description);
+		
+		modal.style.display = 'block';
+		infoModalContent.style.display = 'block';
+		createModalContent.style.display = 'none';
+		messageModal.style.display = 'none';
 } else {
   continue;
 }}};
