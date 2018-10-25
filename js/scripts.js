@@ -59,11 +59,12 @@ const createModal = document.getElementById('createModal'),
     infoModal = document.getElementById('infoModal');
 
 var map,
-    geocoder = new google.maps.Geocoder();
+    geocoder = new google.maps.Geocoder(),
+    myMapMarkers = [];
 
 //EVENT LISTENERS
 window.onload = displayParties();
-window.onload = drawMap([36.732, -119.785]);
+window.onload = initMap();
 
 //Executes the createParty function on click
 createSubmitBtn.addEventListener('click', createParty);
@@ -107,13 +108,17 @@ window.onclick = function(event) {
 
 // MAP RELATED FUNCTIONS
 // how to's:
-// draw a map from lat/lng: map = drawMap([coordinate array]);
+// draw a map from lat/lng: map = drawMap([array with lat & lng]);
 // convert address to lat/lng: myCoords = geocodeAddress("string address");
-// 
+//
 // TODO'S
 // create function for placing all public party markers on the map
 // create logic to geocode addresses when a new party is created
-// create array of coords for parties in the list, or create logic to put all public party pins on the map
+//
+// WORKFLOW
+// When the parties are iterated within "displayParties()",
+// the array of Google Map Marker objects is cleared out and recreated.
+
 
 function initMap() {
     map = drawMap([36.732, -119.785]); //bitwise
@@ -123,9 +128,17 @@ function drawMap(myCoords) {
     var latlng = new google.maps.LatLng(myCoords[0], myCoords[1]);
     var mapOptions = {
         zoom: 15,
-        center: latlng
+        center: latlng,
+        map: map
     }
     return (new google.maps.Map(document.getElementById('map'), mapOptions));
+}
+
+function showAllMarkersOnMap() {
+    for (let i = 0; i <= myMapMarkers.length-1; i++) {
+        myMapMarkers[i].setMap(map);
+        console.log("Map Marker!");
+    }
 }
 
 function geocodeAddress(address) {
@@ -145,9 +158,27 @@ function geocodeAddress(address) {
     return myCoords;
 }
 
+function createMapMarkerObject(coords, name) {
+    var marker 
+    return (new google.maps.Marker({
+        position: new google.maps.LatLng(coords[0], coords[1]),
+        title: name,
+        map: map
+    }));
+    // let newLatLng = new google.maps.LatLng(coords[0], coords[1]);
+    // let newMarker = (new google.maps.Marker({
+    //     position: newLatLng,
+    //     map: map,
+    //     title: name
+    //     })
+    // );
+    // return newMarker;
+}
+
 //FUNCTIONS
 //CREATE MODAL LOGIC
 function displayParties(){
+    myMapMarkers = [];
     for(let i = 0; i <= (parties.length - 1); i++){
         let eventName = parties[i].eventName;
         let time = parties[i].time;
@@ -156,12 +187,8 @@ function displayParties(){
         let partyDiv = document.createElement('div');
         let partyLi = document.createElement('li');
         partyLi.classList = 'show notStyle';
-
-        let marker = new google.maps.Marker({
-            position: parties[i].coords,
-            map: map,
-            title: parties[i].eventName
-        });
+       
+        myMapMarkers.push(createMapMarkerObject(parties[i].coords, parties[i].eventName));
 
         //CHECKS IF BEING DISPLAYED, WILL NOT DUPLICATE ONSCREEN
         if(parties[i].onScreen === false) {
@@ -172,6 +199,7 @@ function displayParties(){
 
         };
     };
+    // map = showAllMarkersOnMap();
 };
 
 //creates the party and puts it into the list parties array
@@ -294,3 +322,5 @@ function showInfo() {
     const displayEventName = document.querySelector('#displayEventName');
     parties.eventName.append(displayEventName);
 };
+
+google.maps.event.addDomListener(window, 'load', initMap);
