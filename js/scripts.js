@@ -10,9 +10,12 @@ const modal = document.getElementById('modal'),
 		findBtn = document.getElementById('findBtn'),
 		partyList = document.getElementById('partyList'),
 		getAgeRadios = document.getElementsByName('ageCheck'),
-		getPrivateRadios = document.getElementsByName('privateCheck');
-		infoModalContent = document.getElementById('infoModalContent');
-		createModalContent = document.getElementById('createModalContent');
+		getPrivateRadios = document.getElementsByName('privateCheck'),
+		infoModalContent = document.getElementById('infoModalContent'),
+		createModalContent = document.getElementById('createModalContent'),
+		messageModal = document.getElementById('messageModal'),
+		inviteBtn = document.getElementById('inviteBtn')
+		slackSubmitBtn = document.getElementById('slackSubmitBtn');
 
 //EVENT LISTENERS
 window.onload = displayParties();
@@ -33,6 +36,7 @@ createBtn.onclick = function() {
 	modal.style.display = 'block';
 	createModalContent.style.display = 'block';
 	infoModalContent.style.display = 'none';
+	messageModal.style.display = 'none';
 	getAgeRadios[0].checked = false;
 	getAgeRadios[1].checked = false;
 	getPrivateRadios[0].checked = false;
@@ -44,6 +48,7 @@ partyList.addEventListener('click', (e) => {
 		modal.style.display = 'block';
 		infoModalContent.style.display = 'block';
 		createModalContent.style.display = 'none';
+		messageModal.style.display = 'none';
 });
 
 //targets the close span and hides the modal
@@ -52,6 +57,7 @@ for (let i = 0; i < closeSpan.length; i++) {
 	modal.style.display = 'none';
 	infoModalContent.style.display = 'none';
 	createModalContent.style.display = 'none';
+	messageModal.style.display = 'none';
 	};
 };
 
@@ -63,6 +69,11 @@ window.onclick = function(event) {
 		createModalContent.style.display = 'none';
 	};
 };
+
+inviteBtn.onclick = function (){
+	messageModal.style.display = 'block';
+	infoModalContent.style.display = 'none';
+}
 
 // MAP STUFFS!
 var map,
@@ -232,17 +243,74 @@ function showInfo() {
 ///////////////////////////////////////////////////////////////////////////
 // SLACK STUFF
 
-function sendSlackMessage(URL, message){
+function sendSlackMessage(URL, message, requestor){
 		let xhr = new XMLHttpRequest();
 
 		xhr.open("POST", URL, true);
 
-		xhr.send(JSON.stringify({
-		text: message
-		}));
+		xhr.send(JSON.stringify(
+			{
+				text: `${requestor} has requested an invite to your party!`,
+				attachments: [
+						{
+								text: message,
+								fallback: "You are unable to choose a game",
+								callback_id: "",
+								color: "#3AA3E3",
+								attachment_type: "default",
+								actions: [
+										{
+												name: "Invite",
+												text: "Invite",
+												type: "button",
+												value: "Invite",
+							confirm: {
+														title: "Are you sure?",
+														text: `${requestor} will be invited to your party.`,
+														ok_text: "Yes",
+														dismiss_text: "No"
+												}
+										},
+										{
+												name: "Deny",
+												text: "Deny",
+												style: "danger",
+												type: "button",
+												value: "Deny",
+												confirm: {
+														title: "Are you sure?",
+														text: `${requestor} will be DENIED`,
+														ok_text: "Yes",
+														dismiss_text: "No"
+												}
+										}
+								]
+						}
+				]
+		}
+		));
 }
 
+slackSubmitBtn.onclick = function(){
+	let message = document.getElementById('slackMessage'),
+	URL = 'https://hooks.slack.com/services/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',
+	requestor = 'Zac';
+	sendSlackMessage(URL, message.value, requestor)
+	message.value = '';
+}
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// USERS 
+
+class Users {
+	constructor(){
+		this.name = name;
+		this.slack = slack;
+		this.parties = [];
+	}
+}
 // DTS https://hooks.slack.com/services/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
 // JOHN W https://hooks.slack.com/services/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
 // ZAC G https://hooks.slack.com/services/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
+
+
