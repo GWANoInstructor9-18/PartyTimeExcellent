@@ -60,7 +60,7 @@ const createModal = document.getElementById('createModal'),
 
 var map,
     geocoder = new google.maps.Geocoder(),
-    myMapMarkers = [];
+    myMapMarkers = {};
 
 //EVENT LISTENERS
 window.onload = displayParties();
@@ -121,64 +121,62 @@ window.onclick = function(event) {
 
 
 function initMap() {
-    map = drawMap([36.732, -119.785]); //bitwise
-}
-
-function drawMap(myCoords) {
-    var latlng = new google.maps.LatLng(myCoords[0], myCoords[1]);
     var mapOptions = {
         zoom: 15,
-        center: latlng,
+        center: {lat: 36.732, lng: -119.785},
         map: map
     }
-    return (new google.maps.Map(document.getElementById('map'), mapOptions));
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    
+    for (let i = 0; i <= myMapMarkers.length-1; i++) {
+        var loc = myMapMarkers[i];
+        var marker = new google.maps.Marker({
+            position: loc,
+            map: map,
+        });
+    
 }
 
-function showAllMarkersOnMap() {
-    for (let i = 0; i <= myMapMarkers.length-1; i++) {
-        myMapMarkers[i].setMap(map);
+function drawMap(myCoordinateObject) {
+
+}
+
+function showAllMarkersOnMap(mapOptions) {
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
         console.log("Map Marker!");
     }
 }
 
-function geocodeAddress(address) {
-    //geocode address to lat/lng
-    var myCoords = [];
-    geocoder.geocode({'address': address}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-            myCoords[0] = results[0].geometry.location.lat();
-            myCoords[1] = results[0].geometry.location.lng();
-            alert("Request successful.")
-        } else {
-            alert("Request failed.");
-        }
-        // map.setCenter(results[0].geometry.location);
-    });
-    //return the coords in an array or an object?
-    return myCoords;
-}
+// function geocodeAddress(address) {
+//     //geocode address to lat/lng
+//     var myCoords = [];
+//     geocoder.geocode({'address': address}, function(results, status) {
+//         if (status == google.maps.GeocoderStatus.OK) {
+//             myCoords[0] = results[0].geometry.location.lat();
+//             myCoords[1] = results[0].geometry.location.lng();
+//             alert("Request successful.")
+//         } else {
+//             alert("Request failed.");
+//         }
+//         // map.setCenter(results[0].geometry.location);
+//     });
+//     //return the coords in an array or an object?
+//     return myCoords;
+// }
 
 function createMapMarkerObject(coords, name) {
-    var marker 
-    return (new google.maps.Marker({
-        position: new google.maps.LatLng(coords[0], coords[1]),
+    var newMarkerObject = (new google.maps.Marker({
+        position: coords,
         title: name,
         map: map
     }));
-    // let newLatLng = new google.maps.LatLng(coords[0], coords[1]);
-    // let newMarker = (new google.maps.Marker({
-    //     position: newLatLng,
-    //     map: map,
-    //     title: name
-    //     })
-    // );
-    // return newMarker;
+    return newMarkerObject;
 }
 
 //FUNCTIONS
 //CREATE MODAL LOGIC
 function displayParties(){
-    myMapMarkers = [];
     for(let i = 0; i <= (parties.length - 1); i++){
         let eventName = parties[i].eventName;
         let time = parties[i].time;
@@ -187,8 +185,7 @@ function displayParties(){
         let partyDiv = document.createElement('div');
         let partyLi = document.createElement('li');
         partyLi.classList = 'show notStyle';
-       
-        myMapMarkers.push(createMapMarkerObject(parties[i].coords, parties[i].eventName));
+        createMapMarkerObject(parties[i]['coords'], parties[i][eventName]);
 
         //CHECKS IF BEING DISPLAYED, WILL NOT DUPLICATE ONSCREEN
         if(parties[i].onScreen === false) {
