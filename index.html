@@ -12,10 +12,39 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
+  <!-- login cover page -->
+  <section class="login-section text-center">
+    <form class="login-form">
+      <div class='container'>
+        <div class='row'>
+          <div class='col-sm-2'>
+            E-mail:<br>
+            <input type="text" id="getEmail"><br>
+            Password:<br>
+            <input type="text" id="getPassword"><br>
+            <br>
+            <button  id="loginBtn" class="btn-primary">Login</button><br>
+          </div>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <video autoplay muted loop id="backgroundVideo">
+    <source src="img/Blurry-party-action.mp4" type="video/mp4">
+  </video>
+
   <!-- HEADER -->
-  <div class="nav-bar">
-    <h1 class="text-center header">Party Time Excellent</h1>
+  <div class="container-fluid header-section">
+    <div>
+      <h1 class="text-center">Party Time Excellent</h1>
+    </div>
   </div>
+  <br>
+  <br>
+
+
 
   <!-- BODY / CONTAINER DIV -->
   <section class="container main">
@@ -33,7 +62,7 @@
           <br>
           <button id="createBtn" class="btn-primary">Create a party</button><br>
           <br>
-          <h3 class="list-h2"><u>List of parties near you!</u></h3>
+          <h3 class="list-h2"><u>Select a party near you!</u></h3>
           <br>
           <ul id="partyList">
           </ul>
