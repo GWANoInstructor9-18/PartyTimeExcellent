@@ -15,7 +15,9 @@ const modal = document.getElementById('modal'),
 		createModalContent = document.getElementById('createModalContent'),
 		messageModal = document.getElementById('messageModal'),
 		inviteBtn = document.getElementById('inviteBtn')
-		slackSubmitBtn = document.getElementById('slackSubmitBtn');
+		slackSubmitBtn = document.getElementById('slackSubmitBtn'),
+		loginBtn = document.getElementById('loginBtn'),
+		loginModal = document.getElementById('loginModal');
 
 //EVENT LISTENERS
 window.onload = displayParties();
@@ -73,6 +75,11 @@ window.onclick = function(event) {
 inviteBtn.onclick = function (){
 	messageModal.style.display = 'block';
 	infoModalContent.style.display = 'none';
+}
+
+loginBtn.onclick = function(){
+	console.log('clicked');
+	loginModal.style.display = 'none';
 }
 
 // MAP STUFFS!
