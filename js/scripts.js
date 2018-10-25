@@ -190,6 +190,7 @@ function checkPrivateRadios(getPrivateRadios, newParty){
     }
     else if(getPrivateRadios[0].checked){
         newParty.private = true;
+
     }else {
         newParty.private = false;
     };
@@ -253,7 +254,7 @@ function showInfo(e) {
     displayCity.append(parties[i].city);
     displayState.append(parties[i].state);
     displayZip.append(parties[i].zip);
-    displayAge.append(parties[i].age);
+    displayAge.append(parties[i].ageRestricted);
     displayPrivate.append(parties[i].private);
     displayDate.append(parties[i].date);
     displayTime.append(parties[i].time);
