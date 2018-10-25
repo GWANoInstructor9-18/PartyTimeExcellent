@@ -92,7 +92,6 @@ inviteBtn.onclick = function (){
 }
 
 loginBtn.onclick = function(){
-	console.log('clicked');
 	loginModal.style.display = 'none';
 }
 
