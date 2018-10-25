@@ -11,7 +11,7 @@ const createModal = document.getElementById('createModal'),
     partyList = document.getElementById('partyList'),
     getAgeRadios = document.getElementsByName('ageCheck'),
     getPrivateRadios = document.getElementsByName('privateCheck'),
-    infoModal = document.getElementById('infoModal'),
+    infoModal = document.getElementById('infoModalContent'),
     displayEventName = document.querySelector('#displayEventName'),
     displayAddress = document.querySelector('#displayStreetAddress'),
     displayCity = document.querySelector('#displayCity'),
@@ -55,6 +55,7 @@ partyList.addEventListener('click', (e) => {
 		infoModalContent.style.display = 'block';
 		createModalContent.style.display = 'none';
 		messageModal.style.display = 'none';
+    showInfo(e);
 });
 
 //targets the close span and hides the modal
@@ -64,15 +65,16 @@ for (let i = 0; i < closeSpan.length; i++) {
 	infoModalContent.style.display = 'none';
 	createModalContent.style.display = 'none';
 	messageModal.style.display = 'none';
+  clearInfoModal();
 	};
 };
 
 
 //closes the info modal and ratifies it's classList
-infoClose.addEventListener('click', e => {
-  infoModal.classList = 'hide notStyle info-modal';
-  clearInfoModal();
-});
+// infoClose.addEventListener('click', e => {
+  // infoModal.classList = 'hide notStyle info-modal';
+//   clearInfoModal();
+// });
 
 //hides the createModal if clicked outside of any entry
 window.onclick = function(event) {
@@ -80,6 +82,7 @@ window.onclick = function(event) {
 		modal.style.display = 'none';
 		infoModalContent.style.display = 'none';
 		createModalContent.style.display = 'none';
+    clearInfoModal();
 	};
 };
 
@@ -140,7 +143,7 @@ function displayParties(){
     let partyDiv = document.createElement('div');
     let partyLi = document.createElement('li');
     let idDiv = document.createElement('div');
-    partyLi.classList = 'show notStyle';
+    partyLi.classList = 'notStyle';
     //this needs to get the one specific party
     idDiv.append(partyId);
     idDiv.classList.add('hide');
@@ -257,19 +260,6 @@ function newPartyId(newParty) {
 		} else {
 			return;
 }};
-
-partyList.addEventListener('click', (e) => {
-  infoModal.classList.toggle('show');
-  showInfo(e);
-});
-
-// function toggleModal() {
-//
-// }
-
-// infoModal.addEventListener('click', (e) => {
-//   infoModal.classList.toggle('show');
-// });
 
 function showInfo(e) {
   //match the entered values and append them to the p tags
