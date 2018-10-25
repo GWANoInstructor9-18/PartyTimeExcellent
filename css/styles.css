@@ -24,7 +24,7 @@
       margin: 15% auto;
       padding: 20px;
       border: 1px solid #888;
-      width: 18%;
+      width: 22%;
 }
 
 .header-section {
@@ -121,6 +121,10 @@
     cursor: pointer;
 }
 
+.createAlign {
+  align-self: flex-start;
+}
+
 li {
   display: flex;
   align-items: stretch;
@@ -144,7 +148,7 @@ li:hover {
   li {
     display: flex;
     /* align-items: stretch; */
-    height: 120px;
+    height: auto;
   }
 }
 
