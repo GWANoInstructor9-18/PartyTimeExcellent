@@ -146,6 +146,7 @@ function displayParties(){
     //this needs to get the one specific party
     idDiv.append(partyId);
     idDiv.classList.add('hide');
+    // sortParties();
 
 
 
@@ -156,6 +157,7 @@ function displayParties(){
         partyDiv.append(partyLi);
         partyList.appendChild(partyLi);
     };
+    sortParties();
     };
 };
 
@@ -299,6 +301,14 @@ function clearInfoModal() {
   displayDate.textContent = '';
   displayTime.textContent = '';
   displayDescription.textContent = '';
+};
+
+function sortParties() {
+  parties.sort(function(a,b) {
+    if (a.date.parties < b.date.parties) return -1;
+    else if (a.date.parties > b.date.parties) return 1;
+    else return 0;
+  });
 };
 
 // SLACK STUFF
