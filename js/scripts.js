@@ -2,7 +2,7 @@
 let parties = [{id: 1,creator: 'Zac',eventName: ' Halloween',address: ' 700 Van Ness',city: ' Fresno',state: ' CA',zip: ' 93721',ageRestricted: true,private: false,date: ' 10/31/2018',time: ' 7:00pm',description: ' This is a generic party.',onScreen: false},{id: 2,creator: ' Phil',eventName: ' Kegger',address: ' 123 Test St.',city: 'Visalia',state: 'CA',zip: ' 93291',ageRestricted: false,private: true,date: '12/25/2018',time: ' 12:00pm',description: 'This is a generic christmas kegger.',onScreen: false},{id: 3,creator: 'John',eventName: ' Runescape LAN',address: ' 999 Johns house',city: ' Tulare',state: ' CA',zip: ' 93724',ageRestricted: true,private: true,date: '10/01/2018',time: ' 9:00am',description: ' This is an extra special LAN party.',onScreen: false}];
 
 //VARIABLES
-const createModal = document.getElementById('createModal'),
+const createModal = document.getElementById('createModalContent'),
     closeSpan = document.getElementsByClassName('close'),
     infoClose =document.getElementById('endMe'),
     createBtn = document.getElementById('createBtn'),
@@ -182,7 +182,7 @@ function createParty(){
 		newParty.id = null;
 		newParty.creator = 'INTEGRATE THIS FEATURE PLEASE' //PLACEHOLDER;
 		newParty.eventName = getEventName;
-		newParty.addres = getStreetAddress;
+		newParty.address = getStreetAddress;
 		newParty.city = getCity;
 		newParty.state = getState;
 		newParty.zip = getZip;
@@ -213,7 +213,7 @@ function checkAgeRadios(getAgeRadios, newParty){
 function checkPrivateRadios(getPrivateRadios, newParty){
     //CHECKS RADIO BUTTONS
     if (getPrivateRadios[0].checked == false && getPrivateRadios[1].checked == false){
-        newParty.private = undefined;
+        newParty.private = false;
         return;
     }
     else if(getPrivateRadios[0].checked){
@@ -263,7 +263,7 @@ function newPartyId(newParty) {
 function showInfo(e) {
   //match the entered values and append them to the p tags
     for(let i = 0; i <= (parties.length -1); i++){
-    if(parties[i].id == e.target.children[0].textContent) {
+    if(parties[i].id == e.target.children[0].textContent && parties[i].private == false) {
     displayEventName.append(parties[i].eventName);
     displayAddress.append(parties[i].address);
     displayCity.append(parties[i].city);
@@ -274,9 +274,19 @@ function showInfo(e) {
     displayDate.append(parties[i].date);
     displayTime.append(parties[i].time);
     displayDescription.append(parties[i].description);
-} else {
-  continue;
-}}};
+  } else {
+    if(parties[i].id == e.target.children[0].textContent && parties[i].private == true) {
+    displayEventName.append(parties[i].eventName);
+    displayCity.append(parties[i].city);
+    displayState.append(parties[i].state);
+    displayZip.append(parties[i].zip);
+    displayAge.append(parties[i].ageRestricted);
+    displayPrivate.append(parties[i].private);
+    displayDate.append(parties[i].date);
+    displayTime.append(parties[i].time);
+    displayDescription.append(parties[i].description);
+    };
+  }}};
 
 function clearInfoModal() {
   displayEventName.textContent = '';
