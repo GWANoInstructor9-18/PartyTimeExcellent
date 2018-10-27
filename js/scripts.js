@@ -22,6 +22,13 @@ const createModal = document.getElementById('createModalContent'),
     displayDate = document.querySelector('#displayDate'),
     displayTime = document.querySelector('#displayTime'),
     displayDescription = document.querySelector('#displayDescription');
+    registrationForm = document.querySelector('#registrationForm');
+    getDOB = document.querySelector('#getDOB');
+    getSlackURL = document.querySelector('#getSlackURL');
+    getPassword = document.querySelector('#getPassword');
+    getUsername = document.querySelector('#getUsername');
+    resgisterBtn = document.querySelector('#resgisterBtn');
+
 
 //EVENT LISTENERS
 window.onload = displayParties();
@@ -146,6 +153,7 @@ function displayParties(){
     //this needs to get the one specific party
     idDiv.append(partyId);
     idDiv.classList.add('hide');
+    // sortParties();
 
 
 
@@ -156,6 +164,7 @@ function displayParties(){
         partyDiv.append(partyLi);
         partyList.appendChild(partyLi);
     };
+    sortParties();
     };
 };
 
@@ -299,6 +308,14 @@ function clearInfoModal() {
   displayDate.textContent = '';
   displayTime.textContent = '';
   displayDescription.textContent = '';
+};
+
+function sortParties() {
+  parties.sort(function(a,b) {
+    if (a.date.parties < b.date.parties) return -1;
+    else if (a.date.parties > b.date.parties) return 1;
+    else return 0;
+  });
 };
 
 // SLACK STUFF
