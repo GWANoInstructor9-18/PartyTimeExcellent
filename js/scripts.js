@@ -393,7 +393,7 @@ slackSubmitBtn.onclick = function(){
 // USERS
 
 class Users {
-	constructor(){
+	constructor(name, slack, DOB, password){
 		this.name = name;
 		this.slack = slack;
 		this.DOB = DOB;
@@ -401,6 +401,7 @@ class Users {
 		this.parties = [];
 	}
 }
+
 // DTS https://hooks.slack.com/services/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
 // JOHN W https://hooks.slack.com/services/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
 // ZAC G https://hooks.slack.com/services/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
