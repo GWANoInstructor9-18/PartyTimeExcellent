@@ -1,13 +1,13 @@
 //DUMMY DATA
 let parties = [{id: 1,creator: 'Zac',eventName: ' Halloween',address: ' 700 Van Ness',city: ' Fresno',state: ' CA',zip: ' 93721',ageRestricted: true,private: false,date: ' 10/31/2018',time: ' 7:00pm',description: ' This is a generic party.',onScreen: false},{id: 2,creator: ' Phil',eventName: ' Kegger',address: ' 123 Test St.',city: 'Visalia',state: 'CA',zip: ' 93291',ageRestricted: false,private: true,date: '12/25/2018',time: ' 12:00pm',description: 'This is a generic christmas kegger.',onScreen: false},{id: 3,creator: 'John',eventName: ' Runescape LAN',address: ' 999 Johns house',city: ' Tulare',state: ' CA',zip: ' 93724',ageRestricted: true,private: true,date: '10/01/2018',time: ' 9:00am',description: ' This is an extra special LAN party.',onScreen: false}];
 let users = [{
-	name: 'Zac',
+	userName: 'Zac',
 	slack: 'https://hooks.slack.com/services/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',
 	DOB: '05-21-1994',
 	password: '1234',
 	parties: [],
 }, {
-	name: 'John',
+	userName: 'John',
 	slack: 'https://hooks.slack.com/services/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',
 	DOB: '05-19-1994',
 	password: '1234',
@@ -34,14 +34,14 @@ const createModal = document.getElementById('createModalContent'),
     displayPrivate = document.querySelector('#displayPrivate'),
     displayDate = document.querySelector('#displayDate'),
     displayTime = document.querySelector('#displayTime'),
-    displayDescription = document.querySelector('#displayDescription');
-    registrationForm = document.querySelector('#registrationForm');
-    getDOB = document.querySelector('#getDOB');
-    getSlackURL = document.querySelector('#getSlackURL');
-    getPassword = document.querySelector('#getPassword');
-    getUsername = document.querySelector('#getUsername');
-    resgisterBtn = document.querySelector('#resgisterBtn');
-    slackSubmitBtn = document.querySelector('#slackSubmitBtn');
+    displayDescription = document.querySelector('#displayDescription'),
+    registrationForm = document.querySelector('#registrationForm'),
+    getDOB = document.querySelector('#getDOB'),
+    getSlackURL = document.querySelector('#getSlackURL'),
+    getPassword = document.querySelector('#getPassword'),
+    getUsername = document.querySelector('#getUsername'),
+    registerBtn = document.querySelector('#registerBtn'),
+    slackSubmitBtn = document.querySelector('#slackSubmitBtn'),
     launchRegisterBtn = document.querySelector('#launchRegisterBtn');
 
 
@@ -333,6 +333,16 @@ function sortParties() {
   });
 };
 
+registerBtn.onclick = function() {
+  //VARIABLES
+  let getDOB = document.querySelector('#getDOB').value,
+  getSlackURL = document.querySelector('#getSlackURL').value,
+  getPassword = document.querySelector('#getPassword').value,
+  getUsername = document.querySelector('#getUsername').value
+  newUser = new User(getDOB, );
+
+};
+
 // SLACK STUFF
 
 function sendSlackMessage(URL, message, requestor){
@@ -352,11 +362,11 @@ function sendSlackMessage(URL, message, requestor){
 				attachment_type: "default",
 				actions: [
 				{
-					name: "Invite",
+					userName: "Invite",
 					text: "Invite",
 					type: "button",
 					value: "Invite",
-				confirm: 
+				confirm:
 					{
 						title: "Are you sure?",
 						text: `${requestor} will be invited to your party.`,
@@ -365,7 +375,7 @@ function sendSlackMessage(URL, message, requestor){
 					}
 				},
 					{
-						name: "Deny",
+						userName: "Deny",
 						text: "Deny",
 						style: "danger",
 						type: "button",
@@ -395,14 +405,16 @@ slackSubmitBtn.onclick = function(){
 // USERS
 
 class Users {
-	constructor(name, slack, DOB, password){
-		this.name = name;
+	constructor(userName, slack, DOB, password){
+		this.userName = userName;
 		this.slack = slack;
 		this.DOB = DOB;
 		this.password = password;
 		this.parties = [];
 	}
 }
+
+// function
 
 // DTS https://hooks.slack.com/services/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
 // JOHN W https://hooks.slack.com/services/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
