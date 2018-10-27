@@ -22,6 +22,13 @@ const createModal = document.getElementById('createModalContent'),
     displayDate = document.querySelector('#displayDate'),
     displayTime = document.querySelector('#displayTime'),
     displayDescription = document.querySelector('#displayDescription');
+    registrationForm = document.querySelector('#registrationForm');
+    getDOB = document.querySelector('#getDOB');
+    getSlackURL = document.querySelector('#getSlackURL');
+    getPassword = document.querySelector('#getPassword');
+    getUsername = document.querySelector('#getUsername');
+    resgisterBtn = document.querySelector('#resgisterBtn');
+
 
 //EVENT LISTENERS
 window.onload = displayParties();
