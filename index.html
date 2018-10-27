@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-
   <!-- login cover page -->
   <section class="login-section text-center" id="loginModal">
     <form class="login-form">
@@ -23,7 +22,8 @@
             Password:<br>
             <input type="text" class="col-xs-12" id="getPassword"><br class="col-sm-12">
             <br>
-            <button  id="loginBtn" class="btn-primary" type="button">Login</button><br>
+            <button  id="loginBtn" class="btn-primary" type="button">Login</button>
+            <button  id="launchRegisterBtn" class="btn-primary" type="button">Register</button><br>
           </div>
       </div>
     </form>
@@ -167,7 +167,7 @@
   <div id="messageModal" class="modal-content">
     <span class="close" id="endMe">&times</span>
     <!-- <form action="POST"> -->
-      <div class="container">
+      <div class="container text-center">
         <textarea name="slackMessage" id="slackMessage" cols="30" rows="10"></textarea>
         <button id="slackSubmitBtn">Send</button>
       </div>

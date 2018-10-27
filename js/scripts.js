@@ -28,6 +28,8 @@ const createModal = document.getElementById('createModalContent'),
     getPassword = document.querySelector('#getPassword');
     getUsername = document.querySelector('#getUsername');
     resgisterBtn = document.querySelector('#resgisterBtn');
+    slackSubmitBtn = document.querySelector('#slackSubmitBtn');
+    launchRegisterBtn = document.querySelector('#launchRegisterBtn');
 
 
 //EVENT LISTENERS
