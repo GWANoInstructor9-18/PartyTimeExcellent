@@ -15,26 +15,33 @@ let users = [{
 }]
 
 //VARIABLES
-const modal = document.getElementById('modal'),
-	closeSpan = document.getElementsByClassName('close'),
-	infoClose =document.getElementById('endMe'),
-	createBtn = document.getElementById('createBtn'),
-	createSubmitBtn = document.getElementById('createSubmitBtn'),
-	findBtn = document.getElementById('findBtn'),
-	partyList = document.getElementById('partyList'),
-	getAgeRadios = document.getElementsByName('ageCheck'),
-	getPrivateRadios = document.getElementsByName('privateCheck'),
-	infoModal = document.getElementById('infoModalContent'),
-	displayEventName = document.querySelector('#displayEventName'),
-	displayAddress = document.querySelector('#displayStreetAddress'),
-	displayCity = document.querySelector('#displayCity'),
-	displayState = document.querySelector('#displayState'),
-	displayZip = document.querySelector('#displayZip'),
-	displayAge = document.querySelector('#displayAge'),
-	displayPrivate = document.querySelector('#displayPrivate'),
-	displayDate = document.querySelector('#displayDate'),
-	displayTime = document.querySelector('#displayTime'),
-	displayDescription = document.querySelector('#displayDescription');
+const createModal = document.getElementById('createModalContent'),
+    closeSpan = document.getElementsByClassName('close'),
+    infoClose =document.getElementById('endMe'),
+    createBtn = document.getElementById('createBtn'),
+    createSubmitBtn = document.getElementById('createSubmitBtn'),
+    findBtn = document.getElementById('findBtn'),
+    partyList = document.getElementById('partyList'),
+    getAgeRadios = document.getElementsByName('ageCheck'),
+    getPrivateRadios = document.getElementsByName('privateCheck'),
+    infoModal = document.getElementById('infoModalContent'),
+    displayEventName = document.querySelector('#displayEventName'),
+    displayAddress = document.querySelector('#displayStreetAddress'),
+    displayCity = document.querySelector('#displayCity'),
+    displayState = document.querySelector('#displayState'),
+    displayZip = document.querySelector('#displayZip'),
+    displayAge = document.querySelector('#displayAge'),
+    displayPrivate = document.querySelector('#displayPrivate'),
+    displayDate = document.querySelector('#displayDate'),
+    displayTime = document.querySelector('#displayTime'),
+    displayDescription = document.querySelector('#displayDescription');
+    registrationForm = document.querySelector('#registrationForm');
+    getDOB = document.querySelector('#getDOB');
+    getSlackURL = document.querySelector('#getSlackURL');
+    getPassword = document.querySelector('#getPassword');
+    getUsername = document.querySelector('#getUsername');
+    resgisterBtn = document.querySelector('#resgisterBtn');
+
 
 //EVENT LISTENERS
 window.onload = displayParties();
@@ -148,6 +155,7 @@ function displayParties(){
     //this needs to get the one specific party
     idDiv.append(partyId);
     idDiv.classList.add('hide');
+    // sortParties();
 
 
 
@@ -158,6 +166,7 @@ function displayParties(){
         partyDiv.append(partyLi);
         partyList.appendChild(partyLi);
     };
+    sortParties();
     };
 };
 
@@ -184,7 +193,7 @@ function createParty(){
 		newParty.id = null;
 		newParty.creator = 'INTEGRATE THIS FEATURE PLEASE' //PLACEHOLDER;
 		newParty.eventName = getEventName;
-		newParty.addres = getStreetAddress;
+		newParty.address = getStreetAddress;
 		newParty.city = getCity;
 		newParty.state = getState;
 		newParty.zip = getZip;
@@ -215,7 +224,7 @@ function checkAgeRadios(getAgeRadios, newParty){
 function checkPrivateRadios(getPrivateRadios, newParty){
     //CHECKS RADIO BUTTONS
     if (getPrivateRadios[0].checked == false && getPrivateRadios[1].checked == false){
-        newParty.private = undefined;
+        newParty.private = false;
         return;
     }
     else if(getPrivateRadios[0].checked){
@@ -268,7 +277,7 @@ function newPartyId(newParty) {
 function showInfo(e) {
   //match the entered values and append them to the p tags
     for(let i = 0; i <= (parties.length -1); i++){
-    if(parties[i].id == e.target.children[0].textContent) {
+    if(parties[i].id == e.target.children[0].textContent && parties[i].private == false) {
     displayEventName.append(parties[i].eventName);
     displayAddress.append(parties[i].address);
     displayCity.append(parties[i].city);
@@ -279,14 +288,27 @@ function showInfo(e) {
     displayDate.append(parties[i].date);
     displayTime.append(parties[i].time);
 		displayDescription.append(parties[i].description);
-		
 		modal.style.display = 'block';
 		infoModalContent.style.display = 'block';
 		createModalContent.style.display = 'none';
 		messageModal.style.display = 'none';
-} else {
-  continue;
-}}};
+  } else {
+    if(parties[i].id == e.target.children[0].textContent && parties[i].private == true) {
+    displayEventName.append(parties[i].eventName);
+    displayCity.append(parties[i].city);
+    displayState.append(parties[i].state);
+    displayZip.append(parties[i].zip);
+    displayAge.append(parties[i].ageRestricted);
+    displayPrivate.append(parties[i].private);
+    displayDate.append(parties[i].date);
+    displayTime.append(parties[i].time);
+		displayDescription.append(parties[i].description);
+		modal.style.display = 'block';
+		infoModalContent.style.display = 'block';
+		createModalContent.style.display = 'none';
+		messageModal.style.display = 'none';
+    };
+  }}};
 
 function clearInfoModal() {
   displayEventName.textContent = '';
@@ -299,6 +321,14 @@ function clearInfoModal() {
   displayDate.textContent = '';
   displayTime.textContent = '';
   displayDescription.textContent = '';
+};
+
+function sortParties() {
+  parties.sort(function(a,b) {
+    if (a.date.parties < b.date.parties) return -1;
+    else if (a.date.parties > b.date.parties) return 1;
+    else return 0;
+  });
 };
 
 // SLACK STUFF
