@@ -1,5 +1,18 @@
 //DUMMY DATA
 let parties = [{id: 1,creator: 'Zac',eventName: ' Halloween',address: ' 700 Van Ness',city: ' Fresno',state: ' CA',zip: ' 93721',ageRestricted: true,private: false,date: ' 10/31/2018',time: ' 7:00pm',description: ' This is a generic party.',onScreen: false},{id: 2,creator: ' Phil',eventName: ' Kegger',address: ' 123 Test St.',city: 'Visalia',state: 'CA',zip: ' 93291',ageRestricted: false,private: true,date: '12/25/2018',time: ' 12:00pm',description: 'This is a generic christmas kegger.',onScreen: false},{id: 3,creator: 'John',eventName: ' Runescape LAN',address: ' 999 Johns house',city: ' Tulare',state: ' CA',zip: ' 93724',ageRestricted: true,private: true,date: '10/01/2018',time: ' 9:00am',description: ' This is an extra special LAN party.',onScreen: false}];
+let users = [{
+	name: 'Zac',
+	slack: 'https://hooks.slack.com/services/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',
+	DOB: '05-21-1994',
+	password: '1234',
+	parties: [],
+}, {
+	name: 'John',
+	slack: 'https://hooks.slack.com/services/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',
+	DOB: '05-19-1994',
+	password: '1234',
+	parties: [],
+}]
 
 //VARIABLES
 const createModal = document.getElementById('createModalContent'),
@@ -58,11 +71,7 @@ createBtn.onclick = function() {
 
 //toggles the modal display when the X is clicked
 partyList.addEventListener('click', (e) => {
-		modal.style.display = 'block';
-		infoModalContent.style.display = 'block';
-		createModalContent.style.display = 'none';
-		messageModal.style.display = 'none';
-    showInfo(e);
+	showInfo(e);
 });
 
 //targets the close span and hides the modal
@@ -75,13 +84,6 @@ for (let i = 0; i < closeSpan.length; i++) {
   clearInfoModal();
 	};
 };
-
-
-//closes the info modal and ratifies it's classList
-// infoClose.addEventListener('click', e => {
-  // infoModal.classList = 'hide notStyle info-modal';
-//   clearInfoModal();
-// });
 
 //hides the createModal if clicked outside of any entry
 window.onclick = function(event) {
@@ -103,19 +105,19 @@ loginBtn.onclick = function(){
 }
 
 // MAP STUFFS!
-var map,
-		geocoder;
-function initMap() {
-	geocoder = new google.maps.Geocoder();
-	// let address = prompt("Gimme an address!");
-	// let myCoords = convertAddressToLatLong(address);
-	var latLng = new google.maps.LatLng(36.732, -119.785); //bitwise!
-	var mapOptions = {
-			zoom: 15,
-			center: latLng
-	}
-	map = new google.maps.Map(document.getElementById('map'), mapOptions);
-}
+// var map,
+// 		geocoder;
+// function initMap() {
+// 	geocoder = new google.maps.Geocoder();
+// 	// let address = prompt("Gimme an address!");
+// 	// let myCoords = convertAddressToLatLong(address);
+// 	var latLng = new google.maps.LatLng(36.732, -119.785); //bitwise!
+// 	var mapOptions = {
+// 			zoom: 15,
+// 			center: latLng
+// 	}
+// 	map = new google.maps.Map(document.getElementById('map'), mapOptions);
+// }
 
 // function reDrawMap(address) {
 //     var myCoords = [];
@@ -248,7 +250,8 @@ function checkNewParty(newParty){
         clearCreateForm();
         newPartyId(newParty);
         displayParties();
-        createModal.style.display = 'none';
+        modal.style.display = 'none';
+        createModalContent.style.display = 'none';
     };
 
 function clearCreateForm() {
@@ -260,6 +263,8 @@ function clearCreateForm() {
 		getDate.value = '';
 		getTime.value = '';
 		getDescription.value = '';
+		modal.style.display = 'none';
+
 };
 
 function newPartyId(newParty) {
@@ -282,7 +287,11 @@ function showInfo(e) {
     displayPrivate.append(parties[i].private);
     displayDate.append(parties[i].date);
     displayTime.append(parties[i].time);
-    displayDescription.append(parties[i].description);
+		displayDescription.append(parties[i].description);
+		modal.style.display = 'block';
+		infoModalContent.style.display = 'block';
+		createModalContent.style.display = 'none';
+		messageModal.style.display = 'none';
   } else {
     if(parties[i].id == e.target.children[0].textContent && parties[i].private == true) {
     displayEventName.append(parties[i].eventName);
@@ -293,7 +302,11 @@ function showInfo(e) {
     displayPrivate.append(parties[i].private);
     displayDate.append(parties[i].date);
     displayTime.append(parties[i].time);
-    displayDescription.append(parties[i].description);
+		displayDescription.append(parties[i].description);
+		modal.style.display = 'block';
+		infoModalContent.style.display = 'block';
+		createModalContent.style.display = 'none';
+		messageModal.style.display = 'none';
     };
   }}};
 
@@ -321,51 +334,52 @@ function sortParties() {
 // SLACK STUFF
 
 function sendSlackMessage(URL, message, requestor){
-		let xhr = new XMLHttpRequest();
+	let xhr = new XMLHttpRequest();
 
-		xhr.open("POST", URL, true);
+	xhr.open("POST", URL, true);
 
-		xhr.send(JSON.stringify(
+	xhr.send(JSON.stringify(
+		{
+			text: `${requestor} has requested an invite to your party!`,
+			attachments: [
 			{
-				text: `${requestor} has requested an invite to your party!`,
-				attachments: [
-						{
-								text: message,
-								fallback: "You are unable to choose a game",
-								callback_id: "",
-								color: "#3AA3E3",
-								attachment_type: "default",
-								actions: [
-										{
-												name: "Invite",
-												text: "Invite",
-												type: "button",
-												value: "Invite",
-							confirm: {
-														title: "Are you sure?",
-														text: `${requestor} will be invited to your party.`,
-														ok_text: "Yes",
-														dismiss_text: "No"
-												}
-										},
-										{
-												name: "Deny",
-												text: "Deny",
-												style: "danger",
-												type: "button",
-												value: "Deny",
-												confirm: {
-														title: "Are you sure?",
-														text: `${requestor} will be DENIED`,
-														ok_text: "Yes",
-														dismiss_text: "No"
-												}
-										}
-								]
+				text: message,
+				fallback: "You are unable to choose a game. :party-wizard:",
+				callback_id: "",
+				color: "#3AA3E3",
+				attachment_type: "default",
+				actions: [
+				{
+					name: "Invite",
+					text: "Invite",
+					type: "button",
+					value: "Invite",
+				confirm: 
+					{
+						title: "Are you sure?",
+						text: `${requestor} will be invited to your party.`,
+						ok_text: "Yes",
+						dismiss_text: "No"
+					}
+				},
+					{
+						name: "Deny",
+						text: "Deny",
+						style: "danger",
+						type: "button",
+						value: "Deny",
+						confirm: {
+								title: "Are you sure?",
+								text: `${requestor} will be DENIED`,
+								ok_text: "Yes",
+								dismiss_text: "No"
 						}
+					}
 				]
+			}
+			]
 		}
-		));
+	));
 }
 
 slackSubmitBtn.onclick = function(){
@@ -382,6 +396,8 @@ class Users {
 	constructor(){
 		this.name = name;
 		this.slack = slack;
+		this.DOB = DOB;
+		this.password = password;
 		this.parties = [];
 	}
 }
