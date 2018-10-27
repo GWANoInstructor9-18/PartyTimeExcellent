@@ -42,8 +42,8 @@ const createModal = document.getElementById('createModalContent'),
     getUsername = document.querySelector('#getUsername'),
     registerBtn = document.querySelector('#registerBtn'),
     slackSubmitBtn = document.querySelector('#slackSubmitBtn'),
-    launchRegisterBtn = document.querySelector('#launchRegisterBtn');
-
+    launchRegisterBtn = document.querySelector('#launchRegisterBtn'),
+		loginModal = document.querySelector('#loginModal');
 
 //EVENT LISTENERS
 window.onload = displayParties();
@@ -339,7 +339,13 @@ registerBtn.onclick = function() {
   getSlackURL = document.querySelector('#getSlackURL').value,
   getPassword = document.querySelector('#getPassword').value,
   getUsername = document.querySelector('#getUsername').value
-  newUser = new User(getDOB, );
+	//create user
+	if (getDOB !== '' && getSlackURL !== '', getPassword !== '', getUsername !== '') {
+		newUser = new User(getUsername, getSlackURL, getDOB, getPassword);
+		users.push(newUser);
+		registrationForm.style.display = 'none';
+		loginModal.classList = 'hidden';
+	};
 
 };
 
@@ -404,7 +410,7 @@ slackSubmitBtn.onclick = function(){
 
 // USERS
 
-class Users {
+class User {
 	constructor(userName, slack, DOB, password){
 		this.userName = userName;
 		this.slack = slack;
