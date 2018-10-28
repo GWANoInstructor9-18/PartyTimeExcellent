@@ -12,9 +12,13 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
   <!-- login cover page -->
   <section class="login-section text-center" id="loginModal">
-    <form class="login-form hidden" id="loginForm">
+    <br>
+    <br>
+    <h1>Log in to get your party on!!</h1>
+    <form class="login-form" id="loginForm">
       <div class='container'>
           <div class='col-sm-2'>
             E-mail:<br>
@@ -27,31 +31,37 @@
           </div>
       </div>
     </form>
-      <form class="registration-form" id="registrationForm">
-        <div class='container'>
-            <div class='col-sm-6'>
-              Username:<br>
-              <input type="text" class="col-xs-12" id="getUsername"><class="col-sm-12">
-              Slack URL:<br>
-              <input type="text" class="col-xs-12" id="getSlackURL"><br class="col-sm-12">
-              Date of Birth:<br>
-              <input type="text" class="col-xs-12" id="getDOB"><br class="col-sm-12">
-              Password:<br>
-              <input type="text" class="col-xs-12" id="getPassword"><br class="col-sm-12"><br>
-              <button id="registerBtn" class="btn-primary" type="button">Register</button><br>
-            </div>
-        </div>
-      </form>
   </section>
 
+<!-- registration modal on cover page -->
+  <section id="registerModal" class="create-modal">
+    <form class="modal-content" id="registrationForm">
+      <span class="close">&times</span>
+      <div class='container'>
+          <div class='col-sm-2'>
+            Username:<br>
+            <input type="text" class="col-xs-12" id="getUsername"><br>
+            Slack URL:<br>
+            <input type="text" class="col-xs-12" id="getSlackURL"><br>
+            Date of Birth:<br>
+            <input type="text" class="col-xs-12" id="getDOB"><br>
+            Password:<br>
+            <input type="text" class="col-xs-12" id="getPassword"><br><br>
+            <button id="registerBtn" class="btn-primary" type="button">Register</button><br>
+          </div>
+      </div>
+    </form>
+  </section>
+
+
   <video autoplay muted loop id="backgroundVideo">
-    <!-- <source src="img/Blurry-party-action.mp4" type="video/mp4"> -->
+    <source src="img/Blurry-party-action.mp4" type="video/mp4">
   </video>
 
   <!-- HEADER -->
-  <div class="container-fluid header-section">
+  <div class="container-fluid header-section header">
     <div>
-      <h1 class="text-center">Party Time Excellent</h1>
+      <h1 class="text-center"><img class='logo' src="img/PTE.png">Party Time Excellent</h1>
     </div>
   </div>
   <br>
@@ -84,12 +94,12 @@
 
 
 <!-- CREATE MODAL -->
-<div id='modal' class='modal'>
+<div id='modal' class='create-modal'>
   <div id="createModalContent" class="modal-content">
     <span class="close">&times</span>
       <form>
-        <div class='container flex'>
-            <div class='col-sm-6 createChild'>
+        <div class='container'>
+            <div class='col-sm-3 createChild'>
               Event Name:<br>
               <input type="text" id="getEventName"><br>
               Street Address:<br>
@@ -103,7 +113,7 @@
               Zip:<br>
               <input type="text" id="getZip"><br>
             </div>
-            <div class='col-sm-6 createAlign createChild'>
+            <div class='col-sm-3 createAlign createChild'>
               21+ party? <br>
                 <label for="Yes"></label> Yes
                 <input name="ageCheck" type="radio" value="Yes">
@@ -135,7 +145,7 @@
     <span class="close" id="endMe">&times</span>
       <form>
         <div class='container'>
-            <div class='col-sm-6'>
+            <div class='col-sm-2'>
               Event Name:<br>
               <p id="displayEventName">
               </p> <br>
@@ -148,7 +158,7 @@
               Zip:<br>
               <p id="displayZip"></p> <br>
             </div>
-            <div class='col-sm-6'>
+            <div class='col-sm-2'>
               21+ party? <br>
               <p id="displayAge"></p>
               Is this a private party? <br>

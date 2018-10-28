@@ -83,6 +83,8 @@ for (let i = 0; i < closeSpan.length; i++) {
 	infoModalContent.style.display = 'none';
 	createModalContent.style.display = 'none';
 	messageModal.style.display = 'none';
+  registerModal.style.display = 'none';
+  registrationForm.style.display = 'none';
   clearInfoModal();
 	};
 };
@@ -93,6 +95,9 @@ window.onclick = function(event) {
 		modal.style.display = 'none';
 		infoModalContent.style.display = 'none';
 		createModalContent.style.display = 'none';
+    messageModal.style.display = 'none';
+    registerModal.style.display = 'none';
+    registrationForm.style.display = 'none';
     clearInfoModal();
 	};
 };
@@ -418,6 +423,13 @@ class User {
 		this.password = password;
 		this.parties = [];
 	}
+}
+
+launchRegisterBtn.onclick = function() {
+	registerModal.style.display = 'block';
+	registrationForm.style.display = 'block';
+  infoModalContent.style.display = 'none';
+	messageModal.style.display = 'none';
 }
 
 // function
