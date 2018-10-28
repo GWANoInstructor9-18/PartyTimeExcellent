@@ -1,19 +1,25 @@
 //DUMMY DATA
 let parties = [{id: 1,creator: 'Zac',eventName: ' Halloween',address: ' 700 Van Ness',city: ' Fresno',state: ' CA',zip: ' 93721',ageRestricted: true,private: false,date: ' 10/31/2018',time: ' 7:00pm',description: ' This is a generic party.',onScreen: false},{id: 2,creator: ' Phil',eventName: ' Kegger',address: ' 123 Test St.',city: 'Visalia',state: 'CA',zip: ' 93291',ageRestricted: false,private: true,date: '12/25/2018',time: ' 12:00pm',description: 'This is a generic christmas kegger.',onScreen: false},{id: 3,creator: 'John',eventName: ' Runescape LAN',address: ' 999 Johns house',city: ' Tulare',state: ' CA',zip: ' 93724',ageRestricted: true,private: true,date: '10/01/2018',time: ' 9:00am',description: ' This is an extra special LAN party.',onScreen: false}];
-let users = [{
-	userName: 'Zac',
-	slack: 'https://hooks.slack.com/services/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',
-	DOB: '05-21-1994',
-	password: '1234',
-	parties: [],
-}, {
-	userName: 'John',
-	slack: 'https://hooks.slack.com/services/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',
-	DOB: '05-19-1994',
-	password: '1234',
-	parties: [],
-}];
+let users = [];
 let currentUser;
+let currentEvent;
+
+// USERS
+
+
+class User {
+	constructor(userName, slack, DOB, password){
+		this.userName = userName;
+		this.slack = slack;
+		this.DOB = DOB;
+		this.password = password;
+		this.parties = [];
+	}
+}
+
+
+
+
 
 //VARIABLES
 const createModal = document.getElementById('createModalContent'),
@@ -44,7 +50,8 @@ const createModal = document.getElementById('createModalContent'),
     registerBtn = document.querySelector('#registerBtn'),
     slackSubmitBtn = document.querySelector('#slackSubmitBtn'),
     launchRegisterBtn = document.querySelector('#launchRegisterBtn'),
-		loginModal = document.querySelector('#loginModal');
+		loginModal = document.querySelector('#loginModal'),
+		currentUserDisplay = document.querySelector('#currentUserDisplay');
 
 //EVENT LISTENERS
 window.onload = displayParties();
@@ -108,6 +115,13 @@ inviteBtn.onclick = function (){
 	infoModalContent.style.display = 'none';
 }
 
+launchRegisterBtn.onclick = function() {
+	registerModal.style.display = 'block';
+	registrationForm.style.display = 'block';
+  infoModalContent.style.display = 'none';
+	messageModal.style.display = 'none';
+}
+
 registerBtn.onclick = function() {
   //VARIABLES
   let getDOB = document.querySelector('#getDOB').value,
@@ -120,7 +134,6 @@ registerBtn.onclick = function() {
 		users.push(newUser);
 		registrationForm.style.display = 'none';
 		registerModal.style.display = 'none';
-		loginModal.classList = 'hidden';
 	};
 
 };
@@ -136,17 +149,19 @@ loginBtn.onclick = function(){
 	}
 	else { login(getLoginUsername, getLoginPassword)
 		}
-}
+};
 
 function login(getLoginUsername, getLoginPassword){
 	for (let i = 0; i < users.length; i++) {
 		if(users[i].userName === getLoginUsername && users[i].password === getLoginPassword){
+			
 			loginModal.style.display = 'none';
-			currentUser = getLoginUsername;
+			currentUser = users[i];
+			currentUserDisplay.textContent = currentUser.userName
 			return true;
-		}
-	}
-}
+		};
+	};
+};
 
 // MAP STUFFS!
 // var map,
@@ -235,7 +250,7 @@ function createParty(){
 
 //sets entries of form to lists
 		newParty.id = null;
-		newParty.creator = 'INTEGRATE THIS FEATURE PLEASE' //PLACEHOLDER;
+		newParty.creator = currentUser;
 		newParty.eventName = getEventName;
 		newParty.address = getStreetAddress;
 		newParty.city = getCity;
@@ -322,6 +337,7 @@ function showInfo(e) {
   //match the entered values and append them to the p tags
     for(let i = 0; i <= (parties.length -1); i++){
     if(parties[i].id == e.target.children[0].textContent && parties[i].private == false) {
+		currentEvent = parties[i];
     displayEventName.append(parties[i].eventName);
     displayAddress.append(parties[i].address);
     displayCity.append(parties[i].city);
@@ -336,8 +352,10 @@ function showInfo(e) {
 		infoModalContent.style.display = 'block';
 		createModalContent.style.display = 'none';
 		messageModal.style.display = 'none';
-  } else {
-    if(parties[i].id == e.target.children[0].textContent && parties[i].private == true) {
+		
+		return
+  } else if(parties[i].id == e.target.children[0].textContent && parties[i].private == true) {
+		currentEvent = parties[i];
     displayEventName.append(parties[i].eventName);
     displayCity.append(parties[i].city);
     displayState.append(parties[i].state);
@@ -351,8 +369,11 @@ function showInfo(e) {
 		infoModalContent.style.display = 'block';
 		createModalContent.style.display = 'none';
 		messageModal.style.display = 'none';
-    };
-  }}};
+
+		return
+		};
+
+  }};
 
 function clearInfoModal() {
   displayEventName.textContent = '';
@@ -377,28 +398,31 @@ function sortParties() {
 
 // SLACK STUFF
 
-function sendSlackMessage(URL, message, requestor){
+function sendSlackMessage(URL, message, requestor, eventName, eventDate, eventTime){
 	let xhr = new XMLHttpRequest();
 
 	xhr.open("POST", URL, true);
 
 	xhr.send(JSON.stringify(
 		{
-			text: `${requestor} has requested an invite to your party!`,
+			text: `${requestor} has requested an invite to:\n
+			${eventName} 
+			On: ${eventDate} 
+			At: ${eventTime}\n`,
 			attachments: [
 			{
 				text: message,
-				fallback: "You are unable to choose a game. :party-wizard:",
-				callback_id: "",
+				fallback: "Hello! I'd like to join yur event!",
+				callback_id: "event_request",
 				color: "#3AA3E3",
 				attachment_type: "default",
 				actions: [
 				{
-					userName: "Invite",
+					name: "Invite",
 					text: "Invite",
 					type: "button",
 					value: "Invite",
-				confirm:
+					confirm:
 					{
 						title: "Are you sure?",
 						text: `${requestor} will be invited to your party.`,
@@ -407,7 +431,7 @@ function sendSlackMessage(URL, message, requestor){
 					}
 				},
 					{
-						userName: "Deny",
+						name: "Deny",
 						text: "Deny",
 						style: "danger",
 						type: "button",
@@ -426,35 +450,29 @@ function sendSlackMessage(URL, message, requestor){
 	));
 }
 
-slackSubmitBtn.onclick = function(){
+
+
+slackSubmitBtn.onclick = function(e){
 	let message = document.getElementById('slackMessage'),
-	URL = 'https://hooks.slack.com/services/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',
-	requestor = 'Zac';
-	sendSlackMessage(URL, message.value, requestor)
+	URL = currentEvent.creator.slack,
+	eventName = currentEvent.eventName,
+	eventDate = currentEvent.date,
+	eventTime = currentEvent.time;
+
+	sendSlackMessage(URL, message.value, currentUser.userName, eventName, eventDate, eventTime);
 	message.value = '';
-}
-
-// USERS
-
-
-class User {
-	constructor(userName, slack, DOB, password){
-		this.userName = userName;
-		this.slack = slack;
-		this.DOB = DOB;
-		this.password = password;
-		this.parties = [];
-	}
-}
-
-launchRegisterBtn.onclick = function() {
-	registerModal.style.display = 'block';
-	registrationForm.style.display = 'block';
-  infoModalContent.style.display = 'none';
 	messageModal.style.display = 'none';
+	modal.style.display = 'none';
 }
 
-// function
+function genericUsers() {
+	let User1 = new User('Zac', 'https://hooks.slack.com/services/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', '05-21-1994', '1234')
+	let User2 = new User('John', 'https://hooks.slack.com/services/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', '05-19-1994', '1234')
+	users.push(User1, User2)
+}
+
+genericUsers();
+
 
 // DTS https://hooks.slack.com/services/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
 // JOHN W https://hooks.slack.com/services/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
