@@ -12,7 +12,8 @@ let users = [{
 	DOB: '05-19-1994',
 	password: '1234',
 	parties: [],
-}]
+}];
+let currentUser;
 
 //VARIABLES
 const createModal = document.getElementById('createModalContent'),
@@ -108,7 +109,26 @@ inviteBtn.onclick = function (){
 }
 
 loginBtn.onclick = function(){
-	loginModal.style.display = 'none';
+	let getLoginUsername = document.querySelector('#getLoginUsername').value,
+	getLoginPassword = document.querySelector('#getLoginPassword').value;
+	if (getLoginUsername === '' || getLoginPassword === '') {
+		alert('Please fill out all requiered fields!');
+	}		
+	else if (getLoginUsername === '' && getLoginPassword === '') {
+		alert('Please fill out all requiered fields!');
+	}
+	else { whatIsScope(getLoginUsername, getLoginPassword)
+		}
+}
+
+function whatIsScope(getLoginUsername, getLoginPassword){
+	for (let i = 0; i < users.length; i++) {
+		if(users[i].userName === getLoginUsername && users[i].password === getLoginPassword){
+			loginModal.style.display = 'none';
+			currentUser = getLoginUsername;
+			return true;
+		}
+	}
 }
 
 // MAP STUFFS!
@@ -414,6 +434,7 @@ slackSubmitBtn.onclick = function(){
 }
 
 // USERS
+
 
 class User {
 	constructor(userName, slack, DOB, password){
