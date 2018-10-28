@@ -108,6 +108,23 @@ inviteBtn.onclick = function (){
 	infoModalContent.style.display = 'none';
 }
 
+registerBtn.onclick = function() {
+  //VARIABLES
+  let getDOB = document.querySelector('#getDOB').value,
+  getSlackURL = document.querySelector('#getSlackURL').value,
+  getPassword = document.querySelector('#getPassword').value,
+  getUsername = document.querySelector('#getUsername').value
+	//create user
+	if (getDOB !== '' && getSlackURL !== '', getPassword !== '', getUsername !== '') {
+		newUser = new User(getUsername, getSlackURL, getDOB, getPassword);
+		users.push(newUser);
+		registrationForm.style.display = 'none';
+		registerModal.style.display = 'none';
+		loginModal.classList = 'hidden';
+	};
+
+};
+
 loginBtn.onclick = function(){
 	let getLoginUsername = document.querySelector('#getLoginUsername').value,
 	getLoginPassword = document.querySelector('#getLoginPassword').value;
@@ -117,11 +134,11 @@ loginBtn.onclick = function(){
 	else if (getLoginUsername === '' && getLoginPassword === '') {
 		alert('Please fill out all requiered fields!');
 	}
-	else { whatIsScope(getLoginUsername, getLoginPassword)
+	else { login(getLoginUsername, getLoginPassword)
 		}
 }
 
-function whatIsScope(getLoginUsername, getLoginPassword){
+function login(getLoginUsername, getLoginPassword){
 	for (let i = 0; i < users.length; i++) {
 		if(users[i].userName === getLoginUsername && users[i].password === getLoginPassword){
 			loginModal.style.display = 'none';
@@ -356,22 +373,6 @@ function sortParties() {
     else if (a.date.parties > b.date.parties) return 1;
     else return 0;
   });
-};
-
-registerBtn.onclick = function() {
-  //VARIABLES
-  let getDOB = document.querySelector('#getDOB').value,
-  getSlackURL = document.querySelector('#getSlackURL').value,
-  getPassword = document.querySelector('#getPassword').value,
-  getUsername = document.querySelector('#getUsername').value
-	//create user
-	if (getDOB !== '' && getSlackURL !== '', getPassword !== '', getUsername !== '') {
-		newUser = new User(getUsername, getSlackURL, getDOB, getPassword);
-		users.push(newUser);
-		registrationForm.style.display = 'none';
-		loginModal.classList = 'hidden';
-	};
-
 };
 
 // SLACK STUFF
