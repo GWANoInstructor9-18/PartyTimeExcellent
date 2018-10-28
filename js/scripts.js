@@ -35,14 +35,16 @@ const createModal = document.getElementById('createModalContent'),
     displayPrivate = document.querySelector('#displayPrivate'),
     displayDate = document.querySelector('#displayDate'),
     displayTime = document.querySelector('#displayTime'),
-		displayDescription = document.querySelector('#displayDescription'),
+    displayDescription = document.querySelector('#displayDescription'),
     registrationForm = document.querySelector('#registrationForm'),
     getDOB = document.querySelector('#getDOB'),
     getSlackURL = document.querySelector('#getSlackURL'),
     getPassword = document.querySelector('#getPassword'),
     getUsername = document.querySelector('#getUsername'),
-		resgisterBtn = document.querySelector('#resgisterBtn');
-
+    registerBtn = document.querySelector('#registerBtn'),
+    slackSubmitBtn = document.querySelector('#slackSubmitBtn'),
+    launchRegisterBtn = document.querySelector('#launchRegisterBtn'),
+		loginModal = document.querySelector('#loginModal');
 
 //EVENT LISTENERS
 window.onload = displayParties();
@@ -82,6 +84,8 @@ for (let i = 0; i < closeSpan.length; i++) {
 	infoModalContent.style.display = 'none';
 	createModalContent.style.display = 'none';
 	messageModal.style.display = 'none';
+  registerModal.style.display = 'none';
+  registrationForm.style.display = 'none';
   clearInfoModal();
 	};
 };
@@ -92,6 +96,9 @@ window.onclick = function(event) {
 		modal.style.display = 'none';
 		infoModalContent.style.display = 'none';
 		createModalContent.style.display = 'none';
+    messageModal.style.display = 'none';
+    registerModal.style.display = 'none';
+    registrationForm.style.display = 'none';
     clearInfoModal();
 	};
 };
@@ -351,6 +358,22 @@ function sortParties() {
   });
 };
 
+registerBtn.onclick = function() {
+  //VARIABLES
+  let getDOB = document.querySelector('#getDOB').value,
+  getSlackURL = document.querySelector('#getSlackURL').value,
+  getPassword = document.querySelector('#getPassword').value,
+  getUsername = document.querySelector('#getUsername').value
+	//create user
+	if (getDOB !== '' && getSlackURL !== '', getPassword !== '', getUsername !== '') {
+		newUser = new User(getUsername, getSlackURL, getDOB, getPassword);
+		users.push(newUser);
+		registrationForm.style.display = 'none';
+		loginModal.classList = 'hidden';
+	};
+
+};
+
 // SLACK STUFF
 
 function sendSlackMessage(URL, message, requestor){
@@ -370,11 +393,11 @@ function sendSlackMessage(URL, message, requestor){
 				attachment_type: "default",
 				actions: [
 				{
-					name: "Invite",
+					userName: "Invite",
 					text: "Invite",
 					type: "button",
 					value: "Invite",
-				confirm: 
+				confirm:
 					{
 						title: "Are you sure?",
 						text: `${requestor} will be invited to your party.`,
@@ -383,7 +406,7 @@ function sendSlackMessage(URL, message, requestor){
 					}
 				},
 					{
-						name: "Deny",
+						userName: "Deny",
 						text: "Deny",
 						style: "danger",
 						type: "button",
@@ -412,7 +435,8 @@ slackSubmitBtn.onclick = function(){
 
 // USERS
 
-class Users {
+
+class User {
 	constructor(userName, slack, DOB, password){
 		this.userName = userName;
 		this.slack = slack;
@@ -421,6 +445,15 @@ class Users {
 		this.parties = [];
 	}
 }
+
+launchRegisterBtn.onclick = function() {
+	registerModal.style.display = 'block';
+	registrationForm.style.display = 'block';
+  infoModalContent.style.display = 'none';
+	messageModal.style.display = 'none';
+}
+
+// function
 
 // DTS https://hooks.slack.com/services/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
 // JOHN W https://hooks.slack.com/services/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
