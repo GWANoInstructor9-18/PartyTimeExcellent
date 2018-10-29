@@ -29,6 +29,11 @@ const createModal = document.querySelector('#createModalContent'),
 	loginModal = document.querySelector('#loginModal'),
 	currentUserDisplay = document.querySelector('#currentUserDisplay');
 
+
+var map,
+    geocoder = new google.maps.Geocoder(),
+    myMapMarkers = {};
+
 let parties = [],
 	users = [],
 	currentUser,
@@ -46,7 +51,7 @@ class User {
 
 
 class Party {
-	constructor(id, creator, eventName, streetAddress, city, state, zip, age, isPrivate, date, time, description){
+	constructor(id, creator, eventName, streetAddress, city, state, zip, age, isPrivate, date, time, description, coords){
 		this.id = id;
 		this.creator = creator;
 		this.eventName = eventName;
@@ -59,6 +64,7 @@ class Party {
 		this.date = date;
 		this.time = time;
 		this.description = description;
+    this.coords = coords;
 		this.onScreen = false;
 	}
 }
@@ -155,39 +161,75 @@ function login(getLoginUsername, getLoginPassword){
 	};
 };
 
-var map,
-		geocoder;
+
+// MAP RELATED FUNCTIONS
+// how to's:
+// draw a map from lat/lng: map = drawMap([array with lat & lng]);
+// convert address to lat/lng: myCoords = geocodeAddress("string address");
+//
+// TODO'S
+// create function for placing all public party markers on the map
+// create logic to geocode addresses when a new party is created
+//
+// WORKFLOW
+// When the parties are iterated within "displayParties()",
+// the array of Google Map Marker objects is cleared out and recreated.
+
+
 function initMap() {
-	geocoder = new google.maps.Geocoder();
-	// let address = prompt("Gimme an address!");
-	// let myCoords = convertAddressToLatLong(address);
-	var latLng = new google.maps.LatLng(36.732, -119.785); //bitwise!
-	var mapOptions = {
-			zoom: 15,
-			center: latLng
-	}
-	map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    var mapOptions = {
+        zoom: 15,
+        center: {lat: 36.732, lng: -119.785},
+        map: map
+    }
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    for (let i = 0; i <= myMapMarkers.length-1; i++) {
+        var loc = myMapMarkers[i];
+        var marker = new google.maps.Marker({
+            position: loc,
+            map: map,
+        });
 }
 
-function reDrawMap(address) {
-    var myCoords = [];
-    geocoder = new google.maps.Geocoder();
-    geocoder.geocode({'address': address}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-            myCoords[0] = results[0].geometry.location.lat();
-            myCoords[1] = results[0].geometry.location.lng();
-            alert("Request successful.")
-        } else {
-            alert("Request failed.");
-        }
-        map.setCenter(results[0].geometry.location);
-    })
+function drawMap(myCoordinateObject) {
 
-    var marker = new google.maps.Marker({
-        map: map,
-        position: results[0].geometry.location
-    })
 }
+
+function showAllMarkersOnMap(mapOptions) {
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+        console.log("Map Marker!");
+    }
+}
+
+// function geocodeAddress(address) {
+//     //geocode address to lat/lng
+//     var myCoords = [];
+//     geocoder.geocode({'address': address}, function(results, status) {
+//         if (status == google.maps.GeocoderStatus.OK) {
+//             myCoords[0] = results[0].geometry.location.lat();
+//             myCoords[1] = results[0].geometry.location.lng();
+//             alert("Request successful.")
+//         } else {
+//             alert("Request failed.");
+//         }
+//         // map.setCenter(results[0].geometry.location);
+//     });
+//     //return the coords in an array or an object?
+//     return myCoords;
+// }
+
+function createMapMarkerObject(coords, name) {
+    var newMarkerObject = (new google.maps.Marker({
+        position: coords,
+        title: name,
+        map: map
+    }));
+    return newMarkerObject;
+}
+
+// map = showAllMarkersOnMap();
 
 function displayParties(){
 	for(let i = 0; i < parties.length; i++){
@@ -216,7 +258,6 @@ function displayParties(){
 };
 
 function createParty(){
-	//VARIABLES
 	let getEventName = document.getElementById('getEventName').value,
 		getStreetAddress = document.getElementById('getStreetAddress').value,
 		getCity = document.getElementById('getCity').value,
@@ -228,6 +269,7 @@ function createParty(){
 		getTime = document.getElementById('getTime').value,
 		getDescription = document.getElementById('getDescription').value,
 		newParty = new Party((parties.length + 1), currentUser, getEventName, getStreetAddress, getCity, getState, getZip, checkAgeRadios(getAgeRadios), checkPrivateRadios(getPrivateRadios), getDate, getTime, getDescription)
+
 
 	checkNewParty(newParty);
 };
@@ -339,8 +381,6 @@ function sortParties() {
   });
 };
 
-// SLACK STUFF
-
 function sendSlackMessage(URL, message, requestor, eventName, eventDate, eventTime){
 	let xhr = new XMLHttpRequest();
 
@@ -415,9 +455,9 @@ function genericUsers() {
 }
 
 function genericParties(){
-	let party1 = new Party(1, users[0],' Halloween',' 700 Van Ness',' Fresno',' CA',' 93721',true,false,' 10/31/2018',' 7:00pm',' This is a generic party.',false)
-	let party2 = new Party(2,users[2],' Kegger',' 123 Test St.','Visalia','CA',' 93291',false,true,'12/25/2018',' 12:00pm','This is a generic christmas kegger.',false)
-	let party3 = new Party(3, users[1],' Runescape LAN',' 999 Johns house',' Tulare',' CA',' 93724',true,true,'10/01/2018',' 9:0am',' This is an extra special LAN party.',false)
+	let party1 = new Party(1, users[0],' Halloween',' 700 Van Ness',' Fresno',' CA',' 93721',true,false,' 10/31/2018',' 7:00pm',' This is a generic party.', {lat: 36.732, lng: -119.785}, false)
+	let party2 = new Party(2,users[2],' Kegger',' 123 Test St.','Visalia','CA',' 93291',false,true,'12/25/2018',' 12:00pm','This is a generic christmas kegger.', {lat: 36.370526, lng: -119.394231}, false)
+	let party3 = new Party(3, users[1],' Runescape LAN',' 999 Johns house',' Tulare',' CA',' 93724',true,true,'10/01/2018',' 9:0am',' This is an extra special LAN party.', {lat: 36.741261, lng: -119.781456}, false)
 	parties.push(party1, party2, party3)
 }
 
@@ -427,7 +467,10 @@ genericParties();
 
 //EVENT LISTENERS
 window.onload = displayParties();
+window.onload = initMap();
+google.maps.event.addDomListener(window, 'load', initMap);
 
 // DTS https://hooks.slack.com/services/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
 // JOHN W https://hooks.slack.com/services/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
 // ZAC G https://hooks.slack.com/services/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
+
