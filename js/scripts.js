@@ -127,14 +127,13 @@ function initMap() {
         map: map
     }
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    
+
     for (let i = 0; i <= myMapMarkers.length-1; i++) {
         var loc = myMapMarkers[i];
         var marker = new google.maps.Marker({
             position: loc,
             map: map,
         });
-    
 }
 
 function drawMap(myCoordinateObject) {
