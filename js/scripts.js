@@ -51,7 +51,7 @@ class User {
 
 
 class Party {
-	constructor(id, creator, eventName, streetAddress, city, state, zip, age, isPrivate, date, time, description, coords){
+	constructor(id, creator, eventName, streetAddress, city, state, zip, age, isPrivate, date, time, coords, description){
 		this.id = id;
 		this.creator = creator;
 		this.eventName = eventName;
@@ -267,8 +267,9 @@ function createParty(){
 		getPrivateRadios = document.getElementsByName('privateCheck'),
 		getDate = document.getElementById('getDate').value,
 		getTime = document.getElementById('getTime').value,
+		getcoords = {lat: 36.732, lng: -119.785}
 		getDescription = document.getElementById('getDescription').value,
-		newParty = new Party((parties.length + 1), currentUser, getEventName, getStreetAddress, getCity, getState, getZip, checkAgeRadios(getAgeRadios), checkPrivateRadios(getPrivateRadios), getDate, getTime, getDescription)
+		newParty = new Party((parties.length + 1), currentUser, getEventName, getStreetAddress, getCity, getState, getZip, checkAgeRadios(getAgeRadios), checkPrivateRadios(getPrivateRadios), getDate, getTime, getcoords, getDescription)
 
 
 	checkNewParty(newParty);
