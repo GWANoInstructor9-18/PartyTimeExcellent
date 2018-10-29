@@ -31,7 +31,7 @@ const createModal = document.querySelector('#createModalContent'),
 
 
 var map,
-    geocoder = new google.maps.Geocoder(),
+    geocoder,
     myMapMarkers = {};
 
 let parties = [],
@@ -467,8 +467,6 @@ genericParties();
 
 //EVENT LISTENERS
 window.onload = displayParties();
-window.onload = initMap();
-google.maps.event.addDomListener(window, 'load', initMap);
 
 // DTS https://hooks.slack.com/services/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
 // JOHN W https://hooks.slack.com/services/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
