@@ -182,17 +182,28 @@ function initMap() {
         center: centerCoordinates
     }
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    geocoder = new google.maps.Geocoder();
+	geocoder = new google.maps.Geocoder();
+	
+	for (let i = 0; i <= parties.length-1; i++) {
+		let tempLocation = Object.values(parties[i].coords);
+		let tempLatLng = new google.maps.LatLng(tempLocation[0], tempLocation[1]);
+		var marker = new google.maps.Marker({
+			position: tempLatLng,
+			map: map
+		});
+	}
+
 }
 
 
-function addMarkerToMap(coords, name) {
-    var googleCoordinateObject = coords;
-    var marker = new google.maps.Marker({
-        position: googleCoordinateObject,
-        map: map
-    });
-}
+// function addMarkerToMap(coords, name) {
+// 	console.log(coords,name)
+//     var googleCoordinateObject = coords;
+//     var marker = new google.maps.Marker({
+//         position: googleCoordinateObject,
+//         map: map
+//     });
+// }
 
 // function geocodeAddress(address) {
 //     //geocode address to lat/lng
