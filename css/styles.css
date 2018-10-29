@@ -35,6 +35,9 @@
 
 .header-section {
   position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .h1, .h2, .h3, h1, h2, h3 {
