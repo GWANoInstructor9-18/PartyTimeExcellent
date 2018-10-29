@@ -27,8 +27,8 @@ const createModal = document.querySelector('#createModalContent'),
 	slackSubmitBtn = document.querySelector('#slackSubmitBtn'),
 	launchRegisterBtn = document.querySelector('#launchRegisterBtn'),
 	loginModal = document.querySelector('#loginModal'),
-	currentUserDisplay = document.querySelector('#currentUserDisplay');
-
+	currentUserDisplay = document.querySelector('#currentUserDisplay'),
+	logoutBtn = document.querySelector('#logout');
 
 var map,
     geocoder,
@@ -137,15 +137,17 @@ registerBtn.onclick = function() {
 };
 
 loginBtn.onclick = function(){
-	let getLoginUsername = document.querySelector('#getLoginUsername').value,
-	getLoginPassword = document.querySelector('#getLoginPassword').value;
+	let getLoginUsername = document.querySelector('#getLoginUsername'),
+	getLoginPassword = document.querySelector('#getLoginPassword');
 	if (getLoginUsername === '' || getLoginPassword === '') {
 		alert('Please fill out all requiered fields!');
 	}		
 	else if (getLoginUsername === '' && getLoginPassword === '') {
 		alert('Please fill out all requiered fields!');
 	}
-	else { login(getLoginUsername, getLoginPassword)
+	else if (login(getLoginUsername.value, getLoginPassword.value)){
+		getLoginPassword.value = '';
+		getLoginUsername.value = '';
 		}
 };
 
@@ -160,6 +162,11 @@ function login(getLoginUsername, getLoginPassword){
 		};
 	};
 };
+
+logoutBtn.onclick = function(){
+	loginModal.style.display = 'block';
+	currentUser = '';
+}
 
 
 // MAP RELATED FUNCTIONS
