@@ -10,38 +10,39 @@ document.addEventListener('DOMContentLoaded', function () {
 // dependent loading of the google maps javascript API by https://phppot.com/php/adding-custom-markers-on-map-using-google-maps-javascript-api/
   
 const createModal = document.querySelector('#createModalContent'),
-    closeSpan = document.getElementsByClassName('close'),
-    infoClose = document.querySelector('#endMe'),
-    createBtn = document.querySelector('#createBtn'),
-    createSubmitBtn = document.querySelector('#createSubmitBtn'),
-    findBtn = document.querySelector('#findBtn'),
-    partyList = document.querySelector('#partyList'),
-    getAgeRadios = document.getElementsByName('ageCheck'),
-    getPrivateRadios = document.getElementsByName('privateCheck'),
-    infoModal = document.querySelector('#infoModalContent'),
-    displayEventName = document.querySelector('#displayEventName'),
-    displayAddress = document.querySelector('#displayStreetAddress'),
-    displayCity = document.querySelector('#displayCity'),
-    displayState = document.querySelector('#displayState'),
-    displayZip = document.querySelector('#displayZip'),
-    displayAge = document.querySelector('#displayAge'),
-    displayPrivate = document.querySelector('#displayPrivate'),
-    displayDate = document.querySelector('#displayDate'),
-    displayTime = document.querySelector('#displayTime'),
-    displayDescription = document.querySelector('#displayDescription'),
-    registrationForm = document.querySelector('#registrationForm'),
-    getDOB = document.querySelector('#getDOB'),
-    getSlackURL = document.querySelector('#getSlackURL'),
-    getPassword = document.querySelector('#getPassword'),
-    getUsername = document.querySelector('#getUsername'),
-    registerBtn = document.querySelector('#registerBtn'),
-    slackSubmitBtn = document.querySelector('#slackSubmitBtn'),
-    launchRegisterBtn = document.querySelector('#launchRegisterBtn'),
-    loginModal = document.querySelector('#loginModal'),
-    currentUserDisplay = document.querySelector('#currentUserDisplay');
 
+	closeSpan = document.getElementsByClassName('close'),
+	infoClose = document.querySelector('#endMe'),
+	createBtn = document.querySelector('#createBtn'),
+	createSubmitBtn = document.querySelector('#createSubmitBtn'),
+	findBtn = document.querySelector('#findBtn'),
+	partyList = document.querySelector('#partyList'),
+	getAgeRadios = document.getElementsByName('ageCheck'),
+	getPrivateRadios = document.getElementsByName('privateCheck'),
+	infoModal = document.querySelector('#infoModalContent'),
+	displayEventName = document.querySelector('#displayEventName'),
+	displayAddress = document.querySelector('#displayStreetAddress'),
+	displayCity = document.querySelector('#displayCity'),
+	displayState = document.querySelector('#displayState'),
+	displayZip = document.querySelector('#displayZip'),
+	displayAge = document.querySelector('#displayAge'),
+	displayPrivate = document.querySelector('#displayPrivate'),
+	displayDate = document.querySelector('#displayDate'),
+	displayTime = document.querySelector('#displayTime'),
+	displayDescription = document.querySelector('#displayDescription'),
+	registrationForm = document.querySelector('#registrationForm'),
+	getDOB = document.querySelector('#getDOB'),
+	getSlackURL = document.querySelector('#getSlackURL'),
+	getPassword = document.querySelector('#getPassword'),
+	getUsername = document.querySelector('#getUsername'),
+	registerBtn = document.querySelector('#registerBtn'),
+	slackSubmitBtn = document.querySelector('#slackSubmitBtn'),
+	launchRegisterBtn = document.querySelector('#launchRegisterBtn'),
+	loginModal = document.querySelector('#loginModal'),
+	currentUserDisplay = document.querySelector('#currentUserDisplay'),
+	logoutBtn = document.querySelector('#logout');
 
-var map, 
+var map,
     geocoder,
     partyLocationArray = [];
 
@@ -62,7 +63,7 @@ class User {
 
 
 class Party {
-	constructor(id, creator, eventName, streetAddress, city, state, zip, age, isPrivate, date, time, description, coords){
+	constructor(id, creator, eventName, streetAddress, city, state, zip, age, isPrivate, date, time, coords, description){
 		this.id = id;
 		this.creator = creator;
 		this.eventName = eventName;
@@ -74,8 +75,8 @@ class Party {
 		this.isPrivate = isPrivate;
 		this.date = date;
 		this.time = time;
+    this.coords = coords;
 		this.description = description;
-        this.coords = coords;
 		this.onScreen = false;
 	}
 }
@@ -148,15 +149,17 @@ registerBtn.onclick = function() {
 };
 
 loginBtn.onclick = function(){
-	let getLoginUsername = document.querySelector('#getLoginUsername').value,
-	getLoginPassword = document.querySelector('#getLoginPassword').value;
+	let getLoginUsername = document.querySelector('#getLoginUsername'),
+	getLoginPassword = document.querySelector('#getLoginPassword');
 	if (getLoginUsername === '' || getLoginPassword === '') {
 		alert('Please fill out all requiered fields!');
 	}		
 	else if (getLoginUsername === '' && getLoginPassword === '') {
 		alert('Please fill out all requiered fields!');
 	}
-	else { login(getLoginUsername, getLoginPassword)
+	else if (login(getLoginUsername.value, getLoginPassword.value)){
+		getLoginPassword.value = '';
+		getLoginUsername.value = '';
 		}
 };
 
@@ -171,6 +174,11 @@ function login(getLoginUsername, getLoginPassword){
 		};
 	};
 };
+
+logoutBtn.onclick = function(){
+	loginModal.style.display = 'block';
+	currentUser = '';
+}
 
 
 // MAP RELATED FUNCTIONS
@@ -239,14 +247,15 @@ function displayParties(){
 		idDiv.classList.add('hide');
 		// sortParties();
 
-        //CHECKS IF BEING DISPLAYED, WILL NOT DUPLICATE ONSCREEN
-        if(parties[i].onScreen === false) {
-            parties[i].onScreen = true;
-            partyLi.append(idDiv, `${eventName} , ${time}, ${date}, ${description}`);
-            partyDiv.append(partyLi);
-            partyList.appendChild(partyLi);
-        };
-        sortParties();
+
+	//CHECKS IF BEING DISPLAYED, WILL NOT DUPLICATE ONSCREEN
+	if(parties[i].onScreen === false) {
+		parties[i].onScreen = true;
+		partyLi.append(idDiv, `${eventName} , ${time}, ${date}, ${description}`);
+		partyDiv.append(partyLi);
+		partyList.appendChild(partyLi);
+	};
+	// sortParties();
 	};
 };
 
@@ -260,8 +269,9 @@ function createParty(){
 		getPrivateRadios = document.getElementsByName('privateCheck'),
 		getDate = document.getElementById('getDate').value,
 		getTime = document.getElementById('getTime').value,
+		getcoords = {lat: 36.732, lng: -119.785}
 		getDescription = document.getElementById('getDescription').value,
-		newParty = new Party((parties.length + 1), currentUser, getEventName, getStreetAddress, getCity, getState, getZip, checkAgeRadios(getAgeRadios), checkPrivateRadios(getPrivateRadios), getDate, getTime, getDescription)
+		newParty = new Party((parties.length + 1), currentUser, getEventName, getStreetAddress, getCity, getState, getZip, checkAgeRadios(getAgeRadios), checkPrivateRadios(getPrivateRadios), getDate, getTime, getcoords, getDescription)
 
 
 	checkNewParty(newParty);
@@ -366,13 +376,13 @@ function clearInfoModal() {
   displayDescription.textContent = '';
 };
 
-function sortParties() {
-  parties.sort(function(a,b) {
-    if (a.date.parties < b.date.parties) return -1;
-    else if (a.date.parties > b.date.parties) return 1;
-    else return 0;
-  });
-};
+// function sortParties() {
+//   parties.sort(function(a,b) {
+//     if (a.date.parties < b.date.parties) return -1;
+//     else if (a.date.parties > b.date.parties) return 1;
+//     else return 0;
+//   });
+// };
 
 function sendSlackMessage(URL, message, requestor, eventName, eventDate, eventTime){
 	let xhr = new XMLHttpRequest();
@@ -444,13 +454,14 @@ slackSubmitBtn.onclick = function(e){
 function genericUsers() {
 	let User1 = new User('Zac', 'https://hooks.slack.com/services/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', '05-21-1994', '1234')
 	let User2 = new User('John', 'https://hooks.slack.com/services/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', '05-19-1994', '1234')
-	users.push(User1, User2)
+	let User3 = new User('Robert', 'https://hooks.slack.com/services/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', '01-01-1990', '1234')
+	users.push(User1, User2, User3)
 }
 
 function genericParties(){
-	let party1 = new Party(1, users[0],' Halloween',' 700 Van Ness',' Fresno',' CA',' 93721',true,false,' 10/31/2018',' 7:00pm',' This is a generic party.', {lat: 36.732, lng: -119.785}, false)
-	let party2 = new Party(2,users[2],' Kegger',' 123 Test St.','Visalia','CA',' 93291',false,true,'12/25/2018',' 12:00pm','This is a generic christmas kegger.', {lat: 36.370526, lng: -119.394231}, false)
-	let party3 = new Party(3, users[1],' Runescape LAN',' 999 Johns house',' Tulare',' CA',' 93724',true,true,'10/01/2018',' 9:0am',' This is an extra special LAN party.', {lat: 36.741261, lng: -119.781456}, false)
+	let party1 = new Party(1, users[0],' Halloween',' 700 Van Ness',' Fresno',' CA',' 93721',true,false,' 10/31/2018',' 7:00pm', {lat: 36.732, lng: -119.785},' This is a generic party.', )
+	let party2 = new Party(2,users[2],' Kegger',' 123 Test St.','Visalia','CA',' 93291',false,true,'12/25/2018',' 12:00pm', {lat: 36.370526, lng: -119.394231},'This is a generic christmas kegger.', )
+	let party3 = new Party(3, users[1],' Runescape LAN',' 999 Johns house',' Tulare',' CA',' 93724',true,true,'10/01/2018',' 9:0am', {lat: 36.741261, lng: -119.781456},' This is an extra special LAN party.', )
 	parties.push(party1, party2, party3)
 }
 
@@ -464,4 +475,4 @@ window.onload = displayParties();
 // DTS https://hooks.slack.com/services/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
 // JOHN W https://hooks.slack.com/services/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
 // ZAC G https://hooks.slack.com/services/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
-
+//ROBERT H https://hooks.slack.com/services/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
