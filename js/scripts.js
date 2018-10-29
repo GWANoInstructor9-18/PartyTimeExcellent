@@ -1,38 +1,49 @@
+document.addEventListener('DOMContentLoaded', function () {
+    if (document.querySelectorAll('#map').length > 0)
+    {
+      var js_file = document.createElement('script');
+      js_file.type = 'text/javascript';
+      js_file.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCI8lGEinZy_MTD48qgqsffX2CFgYzR_Cw&callback=initMap';
+      document.getElementsByTagName('head')[0].appendChild(js_file);
+    }
+});
+// dependent loading of the google maps javascript API by https://phppot.com/php/adding-custom-markers-on-map-using-google-maps-javascript-api/
+  
 const createModal = document.querySelector('#createModalContent'),
-	closeSpan = document.getElementsByClassName('close'),
-	infoClose = document.querySelector('#endMe'),
-	createBtn = document.querySelector('#createBtn'),
-	createSubmitBtn = document.querySelector('#createSubmitBtn'),
-	findBtn = document.querySelector('#findBtn'),
-	partyList = document.querySelector('#partyList'),
-	getAgeRadios = document.getElementsByName('ageCheck'),
-	getPrivateRadios = document.getElementsByName('privateCheck'),
-	infoModal = document.querySelector('#infoModalContent'),
-	displayEventName = document.querySelector('#displayEventName'),
-	displayAddress = document.querySelector('#displayStreetAddress'),
-	displayCity = document.querySelector('#displayCity'),
-	displayState = document.querySelector('#displayState'),
-	displayZip = document.querySelector('#displayZip'),
-	displayAge = document.querySelector('#displayAge'),
-	displayPrivate = document.querySelector('#displayPrivate'),
-	displayDate = document.querySelector('#displayDate'),
-	displayTime = document.querySelector('#displayTime'),
-	displayDescription = document.querySelector('#displayDescription'),
-	registrationForm = document.querySelector('#registrationForm'),
-	getDOB = document.querySelector('#getDOB'),
-	getSlackURL = document.querySelector('#getSlackURL'),
-	getPassword = document.querySelector('#getPassword'),
-	getUsername = document.querySelector('#getUsername'),
-	registerBtn = document.querySelector('#registerBtn'),
-	slackSubmitBtn = document.querySelector('#slackSubmitBtn'),
-	launchRegisterBtn = document.querySelector('#launchRegisterBtn'),
-	loginModal = document.querySelector('#loginModal'),
-	currentUserDisplay = document.querySelector('#currentUserDisplay');
+    closeSpan = document.getElementsByClassName('close'),
+    infoClose = document.querySelector('#endMe'),
+    createBtn = document.querySelector('#createBtn'),
+    createSubmitBtn = document.querySelector('#createSubmitBtn'),
+    findBtn = document.querySelector('#findBtn'),
+    partyList = document.querySelector('#partyList'),
+    getAgeRadios = document.getElementsByName('ageCheck'),
+    getPrivateRadios = document.getElementsByName('privateCheck'),
+    infoModal = document.querySelector('#infoModalContent'),
+    displayEventName = document.querySelector('#displayEventName'),
+    displayAddress = document.querySelector('#displayStreetAddress'),
+    displayCity = document.querySelector('#displayCity'),
+    displayState = document.querySelector('#displayState'),
+    displayZip = document.querySelector('#displayZip'),
+    displayAge = document.querySelector('#displayAge'),
+    displayPrivate = document.querySelector('#displayPrivate'),
+    displayDate = document.querySelector('#displayDate'),
+    displayTime = document.querySelector('#displayTime'),
+    displayDescription = document.querySelector('#displayDescription'),
+    registrationForm = document.querySelector('#registrationForm'),
+    getDOB = document.querySelector('#getDOB'),
+    getSlackURL = document.querySelector('#getSlackURL'),
+    getPassword = document.querySelector('#getPassword'),
+    getUsername = document.querySelector('#getUsername'),
+    registerBtn = document.querySelector('#registerBtn'),
+    slackSubmitBtn = document.querySelector('#slackSubmitBtn'),
+    launchRegisterBtn = document.querySelector('#launchRegisterBtn'),
+    loginModal = document.querySelector('#loginModal'),
+    currentUserDisplay = document.querySelector('#currentUserDisplay');
 
 
-var map,
+var map, 
     geocoder,
-    myMapMarkers = {};
+    partyLocationArray = [];
 
 let parties = [],
 	users = [],
@@ -64,7 +75,7 @@ class Party {
 		this.date = date;
 		this.time = time;
 		this.description = description;
-    this.coords = coords;
+        this.coords = coords;
 		this.onScreen = false;
 	}
 }
@@ -163,44 +174,24 @@ function login(getLoginUsername, getLoginPassword){
 
 
 // MAP RELATED FUNCTIONS
-// how to's:
-// draw a map from lat/lng: map = drawMap([array with lat & lng]);
-// convert address to lat/lng: myCoords = geocodeAddress("string address");
-//
-// TODO'S
-// create function for placing all public party markers on the map
-// create logic to geocode addresses when a new party is created
-//
-// WORKFLOW
-// When the parties are iterated within "displayParties()",
-// the array of Google Map Marker objects is cleared out and recreated.
-
 
 function initMap() {
+    var centerCoordinates = new google.maps.LatLng(36.732,-119.785);
     var mapOptions = {
         zoom: 15,
-        center: {lat: 36.732, lng: -119.785},
+        center: centerCoordinates
+    }
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    geocoder = new google.maps.Geocoder();
+}
+
+
+function addMarkerToMap(coords, name) {
+    var googleCoordinateObject = coords;
+    var marker = new google.maps.Marker({
+        position: googleCoordinateObject,
         map: map
-    }
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-    for (let i = 0; i <= myMapMarkers.length-1; i++) {
-        var loc = myMapMarkers[i];
-        var marker = new google.maps.Marker({
-            position: loc,
-            map: map,
-        });
-}
-
-function drawMap(myCoordinateObject) {
-
-}
-
-function showAllMarkersOnMap(mapOptions) {
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-        console.log("Map Marker!");
-    }
+    });
 }
 
 // function geocodeAddress(address) {
@@ -220,15 +211,6 @@ function showAllMarkersOnMap(mapOptions) {
 //     return myCoords;
 // }
 
-function createMapMarkerObject(coords, name) {
-    var newMarkerObject = (new google.maps.Marker({
-        position: coords,
-        title: name,
-        map: map
-    }));
-    return newMarkerObject;
-}
-
 // map = showAllMarkersOnMap();
 
 function displayParties(){
@@ -246,14 +228,14 @@ function displayParties(){
 		idDiv.classList.add('hide');
 		// sortParties();
 
-	//CHECKS IF BEING DISPLAYED, WILL NOT DUPLICATE ONSCREEN
-	if(parties[i].onScreen === false) {
-		parties[i].onScreen = true;
-		partyLi.append(idDiv, `${eventName} , ${time}, ${date}, ${description}`);
-		partyDiv.append(partyLi);
-		partyList.appendChild(partyLi);
-	};
-	sortParties();
+        //CHECKS IF BEING DISPLAYED, WILL NOT DUPLICATE ONSCREEN
+        if(parties[i].onScreen === false) {
+            parties[i].onScreen = true;
+            partyLi.append(idDiv, `${eventName} , ${time}, ${date}, ${description}`);
+            partyDiv.append(partyLi);
+            partyList.appendChild(partyLi);
+        };
+        sortParties();
 	};
 };
 
