@@ -43,7 +43,8 @@ const createModal = document.querySelector('#createModalContent'),
 	logoutBtn = document.querySelector('#logout');
 
 var map,
-    geocoder,
+	geocoder,
+	bounds,
     partyLocationArray = [];
 
 let parties = [],
@@ -191,6 +192,7 @@ function initMap() {
     }
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 	geocoder = new google.maps.Geocoder();
+	bounds = new google.maps.LatLngBounds();
 	
 	for (let i = 0; i <= parties.length-1; i++) {
 		let tempLocation = Object.values(parties[i].coords);
@@ -199,8 +201,9 @@ function initMap() {
 			position: tempLatLng,
 			map: map
 		});
+		bounds.extend(tempLatLng);
 	}
-
+	map.fitBounds(bounds);
 }
 
 
